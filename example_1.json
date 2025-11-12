@@ -1,0 +1,216 @@
+{
+  "structure": "example_1.xyz",
+  "n_atoms": 51,
+  "device": "cuda",
+  "reference": {
+    "source": "finite_difference",
+    "delta": 0.001,
+    "symmetry_error": 0.0,
+    "summary": {
+      "min_cm-1": 22.473456446832422,
+      "max_cm-1": 3234.3780305625205,
+      "mean_abs_cm-1": 1160.543917023254,
+      "n_negative": 0,
+      "n_small_negative": 0
+    }
+  },
+  "finite_differences": [
+    {
+      "delta": 0.05,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": -0.23252217721875684,
+        "max_cm-1": 3246.0369757937483,
+        "mean_abs_cm-1": 1159.6542099993874,
+        "n_negative": 1,
+        "n_small_negative": 1
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.025055750346491913,
+        "mean_absolute_error": 0.004157049635131189,
+        "max_absolute_error": 0.49292147159576416
+      }
+    },
+    {
+      "delta": 0.01,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 22.178566235964325,
+        "max_cm-1": 3234.8016885249494,
+        "mean_abs_cm-1": 1160.4947595375236,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.0029334176514219353,
+        "mean_absolute_error": 0.0004229051023020304,
+        "max_absolute_error": 0.1632142812013626
+      }
+    },
+    {
+      "delta": 0.005,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 22.456084777029105,
+        "max_cm-1": 3234.5186237752423,
+        "mean_abs_cm-1": 1160.5279234558573,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.0010403686406417066,
+        "mean_absolute_error": 0.00023244716088169836,
+        "max_absolute_error": 0.05821622908115387
+      }
+    },
+    {
+      "delta": 0.001,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 22.473456446832422,
+        "max_cm-1": 3234.3780305625205,
+        "mean_abs_cm-1": 1160.543917023254,
+        "n_negative": 0,
+        "n_small_negative": 0
+      }
+    }
+  ],
+  "analytical_methods": [
+    {
+      "method": "double_backward",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": -4388.024919525308,
+        "max_cm-1": 7609.68099788947,
+        "mean_abs_cm-1": 1297.547065597192,
+        "n_negative": 76,
+        "n_small_negative": 3
+      },
+      "metrics_vs_reference": {
+        "rms_error": 8.576719508102505,
+        "mean_absolute_error": 3.5796867220494084,
+        "max_absolute_error": 219.3857380449772
+      }
+    },
+    {
+      "method": "double_backward",
+      "symmetrize": false,
+      "symmetry_error": 0.0002689361572265625,
+      "summary": {
+        "min_cm-1": -4388.005032775616,
+        "max_cm-1": 7609.507787693416,
+        "mean_abs_cm-1": 1297.5513895508236,
+        "n_negative": 75,
+        "n_small_negative": 2
+      },
+      "metrics_vs_reference": {
+        "rms_error": 8.576663394525662,
+        "mean_absolute_error": 3.5796527121055606,
+        "max_absolute_error": 219.38560071587563
+      }
+    },
+    {
+      "method": "vmap",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": -4388.000471934396,
+        "max_cm-1": 7609.624928070319,
+        "mean_abs_cm-1": 1297.5456845958824,
+        "n_negative": 76,
+        "n_small_negative": 3
+      },
+      "metrics_vs_reference": {
+        "rms_error": 8.576708668202338,
+        "mean_absolute_error": 3.579685074356923,
+        "max_absolute_error": 219.38633313775063
+      }
+    },
+    {
+      "method": "vmap",
+      "symmetrize": false,
+      "symmetry_error": 0.0003223419189453125,
+      "summary": {
+        "min_cm-1": -4387.952928972569,
+        "max_cm-1": 7609.427118197733,
+        "mean_abs_cm-1": 1297.5481006250484,
+        "n_negative": 75,
+        "n_small_negative": 2
+      },
+      "metrics_vs_reference": {
+        "rms_error": 8.576628029212314,
+        "mean_absolute_error": 3.5796370865984373,
+        "max_absolute_error": 219.38433423638344
+      }
+    },
+    {
+      "method": "fairchem",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": -4388.0626561877025,
+        "max_cm-1": 7609.671145975506,
+        "mean_abs_cm-1": 1297.5458828692613,
+        "n_negative": 75,
+        "n_small_negative": 2
+      },
+      "metrics_vs_reference": {
+        "rms_error": 8.576705149300883,
+        "mean_absolute_error": 3.5796799980842255,
+        "max_absolute_error": 219.38360181450844
+      }
+    },
+    {
+      "method": "fairchem",
+      "symmetrize": false,
+      "symmetry_error": 0.00034332275390625,
+      "summary": {
+        "min_cm-1": -4388.014585409916,
+        "max_cm-1": 7609.509943729594,
+        "mean_abs_cm-1": 1297.5518140645222,
+        "n_negative": 74,
+        "n_small_negative": 1
+      },
+      "metrics_vs_reference": {
+        "rms_error": 8.576678153805126,
+        "mean_absolute_error": 3.5796622059680216,
+        "max_absolute_error": 219.38856092095375
+      }
+    },
+    {
+      "method": "fairchem_loop",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": -4387.949587404165,
+        "max_cm-1": 7609.572452404533,
+        "mean_abs_cm-1": 1297.5450192238952,
+        "n_negative": 74,
+        "n_small_negative": 1
+      },
+      "metrics_vs_reference": {
+        "rms_error": 8.576706385501696,
+        "mean_absolute_error": 3.579681743118002,
+        "max_absolute_error": 219.38546338677406
+      }
+    },
+    {
+      "method": "fairchem_loop",
+      "symmetrize": false,
+      "symmetry_error": 0.00034332275390625,
+      "summary": {
+        "min_cm-1": -4387.969113600488,
+        "max_cm-1": 7609.471565181308,
+        "mean_abs_cm-1": 1297.5551024518336,
+        "n_negative": 75,
+        "n_small_negative": 2
+      },
+      "metrics_vs_reference": {
+        "rms_error": 8.57665000234584,
+        "mean_absolute_error": 3.5796544737096703,
+        "max_absolute_error": 219.3851276934147
+      }
+    }
+  ]
+}
