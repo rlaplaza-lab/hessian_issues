@@ -131,26 +131,17 @@ class StandaloneUMACalculator(Calculator):
         ).to(device)
 
         batch = data_list_collater([data], otf_graph=True).to(device)
-        batch.pos = batch.pos.detach().clone().requires_grad_(True)
+        # Ensure positions have requires_grad=True for gradient computation
+        # Note: otf_graph=True doesn't automatically set this, it's required for autograd
+        batch.pos.requires_grad_(True)
 
-        self.predictor.model.train()
-
-        # Disable dropout layers for deterministic outputs
-        for module in self.predictor.model.modules():
-            if getattr(module, "training", False) and hasattr(module, "p"):
-                module.p = 0.0
-
-        energy_head = None
-        prev_energy_head_state = None
-        model_module = getattr(self.predictor.model, "module", None)
-        output_heads = getattr(model_module, "output_heads", None)
-        if isinstance(output_heads, dict):
-            energy_wrapper = output_heads.get("energyandforcehead")
-            if energy_wrapper is not None and hasattr(energy_wrapper, "head"):
-                energy_head = energy_wrapper.head
-        if energy_head is not None:
-            prev_energy_head_state = energy_head.training
-            energy_head.training = True
+        # Match FairChem's approach: only set head.training = True
+        # Do NOT set model.train() or manually disable dropout
+        # Turn on create_graph for the first derivative (matches FairChem)
+        model_module = self.predictor.model.module
+        energy_wrapper = model_module.output_heads["energyandforcehead"]
+        prev_head_training = energy_wrapper.head.training
+        energy_wrapper.head.training = True
 
         result = self.predictor.predict(batch)
         energy = result["energy"]
@@ -164,16 +155,29 @@ class StandaloneUMACalculator(Calculator):
                 create_graph=True,
                 retain_graph=True,
             )[0]
-            hessian_tensor = self._compute_hessian_vmap(forces, batch.pos)
-        elif method in {"fairchem", "fairchem_vmap"}:
+            # Use fairchem_style with vmap (same algorithm)
             hessian_tensor = self._compute_hessian_fairchem_style(
-                result["forces"],
+                forces,
+                batch.pos,
+                use_vmap=True,
+            )
+        elif method in {"fairchem", "fairchem_vmap"}:
+            # Use forces directly from predict() when head is in training mode
+            # This matches the reference implementation which uses pred["forces"]
+            # When head.training = True, forces should have computation graph
+            forces = result["forces"]
+            hessian_tensor = self._compute_hessian_fairchem_style(
+                forces,
                 batch.pos,
                 use_vmap=True,
             )
         elif method == "fairchem_loop":
+            # Use forces directly from predict() when head is in training mode
+            # This matches the reference implementation which uses pred["forces"]
+            # When head.training = True, forces should have computation graph
+            forces = result["forces"]
             hessian_tensor = self._compute_hessian_fairchem_style(
-                result["forces"],
+                forces,
                 batch.pos,
                 use_vmap=False,
             )
@@ -183,9 +187,8 @@ class StandaloneUMACalculator(Calculator):
                 "Use 'double_backward', 'vmap', 'fairchem', 'fairchem_loop', or 'auto'."
             )
 
-        self.predictor.model.eval()
-        if energy_head is not None and prev_energy_head_state is not None:
-            energy_head.training = prev_energy_head_state
+        # Turn off create_graph for the first derivative (match FairChem's cleanup)
+        energy_wrapper.head.training = prev_head_training
 
         n_atoms = len(self.atoms)
         expected_shape = (3 * n_atoms, 3 * n_atoms)
@@ -290,85 +293,36 @@ class StandaloneUMACalculator(Calculator):
             rows.append((-hess_row).view(-1))
         return torch.stack(rows)
 
-    def _compute_hessian_vmap(self, forces, positions) -> Any:
-        """Compute Hessian using vector-Jacobian products with torch.vmap."""
-        import torch
-
-        forces_flat = forces.view(-1)
-        num_elements = forces_flat.shape[0]
-
-        def get_vjp(vec: torch.Tensor) -> torch.Tensor:
-            grad_output = torch.autograd.grad(
-                -forces_flat,
-                positions,
-                grad_outputs=vec,
-                retain_graph=True,
-                create_graph=False,
-                allow_unused=False,
-            )[0]
-            return grad_output.view(-1)
-
-        identity = torch.eye(num_elements, dtype=forces.dtype, device=forces.device)
-        try:
-            chunk = 1 if num_elements < 64 else 16
-            return torch.vmap(get_vjp, in_dims=0, out_dims=0, chunk_size=chunk)(identity)
-        except RuntimeError:
-            return self._compute_hessian_loop(forces, positions)
-
-    def _compute_hessian_loop(self, forces, positions) -> Any:
-        """Fallback loop-based Hessian computation."""
-        import torch
-
-        forces_flat = forces.view(-1)
-        num_elements = forces_flat.shape[0]
-        rows = []
-        for idx in range(num_elements):
-            vec = torch.zeros(num_elements, dtype=forces.dtype, device=forces.device)
-            vec[idx] = 1.0
-            grad_output = torch.autograd.grad(
-                -forces_flat,
-                positions,
-                grad_outputs=vec,
-                retain_graph=True,
-                create_graph=False,
-                allow_unused=False,
-            )[0]
-            rows.append(grad_output.view(-1))
-        return torch.stack(rows)
-
     def _compute_hessian_fairchem_style(self, forces, positions, *, use_vmap: bool) -> Any:
-        """Replicate FairChem PR #1361 Hessian logic."""
+        """Replicate FairChem PR #1361 Hessian logic exactly."""
         import torch
 
-        forces_flat = forces.view(-1)
+        forces_flat = forces.flatten()
         num_dofs = forces_flat.shape[0]
-        identity = torch.eye(num_dofs, dtype=forces_flat.dtype, device=forces_flat.device)
-
-        def grad_wrt_positions(vec: torch.Tensor) -> torch.Tensor:
-            grad_pos = torch.autograd.grad(
-                -forces_flat,
-                positions,
-                grad_outputs=vec,
-                retain_graph=True,
-                allow_unused=False,
-                create_graph=False,
-            )[0]
-            return grad_pos.reshape(-1)
 
         if use_vmap and hasattr(torch, "vmap"):
-            try:
-                chunk = 1 if num_dofs < 64 else 16
-                return torch.vmap(
-                    grad_wrt_positions,
-                    in_dims=0,
-                    out_dims=0,
-                    chunk_size=chunk,
-                )(identity)
-            except RuntimeError:
-                pass
-
-        rows = [grad_wrt_positions(identity[idx]) for idx in range(num_dofs)]
-        return torch.stack(rows, dim=0)
+            # Match FairChem's vmap implementation exactly
+            hessian = torch.vmap(
+                lambda vec: torch.autograd.grad(
+                    -forces_flat,
+                    positions,
+                    grad_outputs=vec,
+                    retain_graph=True,
+                )[0],
+            )(torch.eye(num_dofs, dtype=forces_flat.dtype, device=forces_flat.device))
+            return hessian
+        else:
+            # Match FairChem's non-vmap implementation exactly
+            # Compute gradient of each force component separately
+            hessian_list = []
+            for i in range(num_dofs):
+                grad_pos = torch.autograd.grad(
+                    -forces_flat[i],
+                    positions,
+                    retain_graph=True,
+                )[0]
+                hessian_list.append(grad_pos.flatten())
+            return torch.stack(hessian_list, dim=0)
 
     @staticmethod
     def _symmetrize_hessian(hessian: np.ndarray) -> np.ndarray:

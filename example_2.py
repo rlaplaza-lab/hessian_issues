@@ -31,6 +31,7 @@ from typing import Any
 import numpy as np
 from ase import units
 from ase.io import read
+from ase.vibrations import Vibrations
 
 SCRIPT_PATH = Path(__file__).resolve()
 SCRIPT_STEM = SCRIPT_PATH.stem
@@ -104,34 +105,26 @@ def enforce_python_ints(atoms) -> None:
 def compute_finite_difference_hessian(
     atoms, calculator, delta: float
 ) -> tuple[np.ndarray, float]:
-    """Central-difference Hessian with configurable step size."""
-    n_atoms = len(atoms)
-    dofs = 3 * n_atoms
-    hessian = np.zeros((dofs, dofs), dtype=float)
-
-    for coord_index in range(dofs):
-        atom_index = coord_index // 3
-        axis = coord_index % 3
-
-        displaced_plus = atoms.copy()
-        displaced_minus = atoms.copy()
-        enforce_python_ints(displaced_plus)
-        enforce_python_ints(displaced_minus)
-
-        displaced_plus.positions[atom_index, axis] += delta
-        displaced_minus.positions[atom_index, axis] -= delta
-
-        displaced_plus.calc = calculator
-        displaced_minus.calc = calculator
-
-        forces_plus = displaced_plus.get_forces().reshape(-1)
-        forces_minus = displaced_minus.get_forces().reshape(-1)
-
-        column = (forces_minus - forces_plus) / (2.0 * delta)
-        hessian[:, coord_index] = column
-
-    # Symmetrize for numerical stability
-    hessian = 0.5 * (hessian + hessian.T)
+    """Compute Hessian using ASE's Vibrations class with central differences."""
+    # Ensure calculator is set
+    atoms_copy = atoms.copy()
+    atoms_copy.calc = calculator
+    enforce_python_ints(atoms_copy)
+    
+    # Use ASE Vibrations class for finite difference Hessian
+    # Create temporary name to avoid cache conflicts
+    import tempfile
+    import os
+    with tempfile.TemporaryDirectory() as tmpdir:
+        vib = Vibrations(atoms_copy, delta=delta, name=os.path.join(tmpdir, 'vib'))
+        vib.run()
+        vib.read()
+        hessian = vib.H.copy()
+        # Clean up cache to free memory
+        vib.clean()
+    
+    # Compute symmetry error before any additional symmetrization
+    # (ASE already symmetrizes in read(), but check anyway)
     symmetry_error = float(np.max(np.abs(hessian - hessian.T)))
     return hessian, symmetry_error
 
