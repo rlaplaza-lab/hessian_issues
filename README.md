@@ -44,6 +44,7 @@ python examples/example_1.py
 python examples/example_2.py
 python examples/example_3.py
 python examples/example_4.py
+python examples/example_5.py
 ```
 
 Each script:
@@ -78,17 +79,20 @@ Each script generates:
 │   ├── example_2.py          # Water molecule (H₂O) test case
 │   ├── example_3.py          # Methane with distorted geometry
 │   ├── example_4.py          # Methane with equilibrium geometry
+│   ├── example_5.py          # Transition state structure test case
 │   └── example_inference_settings.py  # InferenceSettings demonstration
 ├── data/                     # Input molecular geometries
 │   ├── example_1.xyz
 │   ├── example_2.xyz
 │   ├── example_3.xyz
-│   └── example_4.xyz
+│   ├── example_4.xyz
+│   └── example_5.xyz
 └── results/                  # Generated output files (created by scripts)
     ├── example_1.json
     ├── example_2.json
     ├── example_3.json
-    └── example_4.json
+    ├── example_4.json
+    └── example_5.json
 ```
 
 ## Reproducibility
@@ -105,3 +109,4 @@ All scripts are designed to be self-contained and reproducible:
 - **example_2.py**: Water molecule (H₂O) test case for validation on a simple, well-characterized system
 - **example_3.py**: Methane (CH₄) molecule with distorted geometry, reproducing a failing test case from the test suite to investigate Hessian accuracy issues
 - **example_4.py**: Methane molecule with realistic equilibrium tetrahedral geometry (C-H bond length ~1.087 Å) to compare with the distorted geometry case and determine if accuracy issues are geometry-dependent
+- **example_5.py**: Transition state structure test case (12 atoms: C, H, F, Cl, N, O) to validate Hessian computation on transition state geometries
