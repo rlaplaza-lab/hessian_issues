@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""UMA Hessian comparison example (standalone).
+"""UMA Hessian comparison example (standalone) - Methane test case.
+
+This example reproduces the methane Hessian test that fails in the test suite.
+It uses the same methane molecule from test_uma_hessian_methane to investigate
+the discrepancy between analytical and finite-difference Hessians.
 
 Usage
 -----
-    python example_2.py
+    python example_3.py
 
 Requirements
 ------------
@@ -16,7 +20,7 @@ Outputs
 The script prints finite-difference and analytical Hessian statistics to stdout
 and saves a JSON summary in ``<script_stem>.json`` alongside the script. The
 geometry is read from ``<script_stem>.xyz`` in the same directory, so the script
-can be copied or renamed (for example_2) without modification.
+can be copied or renamed (for example_3) without modification.
 """
 
 from __future__ import annotations
@@ -172,6 +176,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Finite-difference Hessians
     # ------------------------------------------------------------------
+    # Use same delta values as test (TIGHT_DELTA = 0.001) plus a range for comparison
     fd_steps = [0.05, 0.01, 0.005, 0.001]
     fd_results: list[dict[str, Any]] = []
 

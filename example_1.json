@@ -7,9 +7,9 @@
     "delta": 0.001,
     "symmetry_error": 0.0,
     "summary": {
-      "min_cm-1": 22.473456446832422,
-      "max_cm-1": 3234.3780305625205,
-      "mean_abs_cm-1": 1160.543917023254,
+      "min_cm-1": 22.494579829948965,
+      "max_cm-1": 3234.3776995133862,
+      "mean_abs_cm-1": 1160.544160975146,
       "n_negative": 0,
       "n_small_negative": 0
     }
@@ -19,57 +19,57 @@
       "delta": 0.05,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": -0.23252217721875684,
-        "max_cm-1": 3246.0369757937483,
-        "mean_abs_cm-1": 1159.6542099993874,
+        "min_cm-1": -0.2151687792641964,
+        "max_cm-1": 3246.0370401764353,
+        "mean_abs_cm-1": 1159.65413304562,
         "n_negative": 1,
         "n_small_negative": 1
       },
       "metrics_vs_reference": {
-        "rms_error": 0.025055750346491913,
-        "mean_absolute_error": 0.004157049635131189,
-        "max_absolute_error": 0.49292147159576416
+        "rms_error": 0.025057753009377536,
+        "mean_absolute_error": 0.0041568276472257835,
+        "max_absolute_error": 0.49302518367767334
       }
     },
     {
       "delta": 0.01,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 22.178566235964325,
-        "max_cm-1": 3234.8016885249494,
-        "mean_abs_cm-1": 1160.4947595375236,
+        "min_cm-1": 22.169313044763783,
+        "max_cm-1": 3234.802074942814,
+        "mean_abs_cm-1": 1160.49474954635,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0029334176514219353,
-        "mean_absolute_error": 0.0004229051023020304,
-        "max_absolute_error": 0.1632142812013626
+        "rms_error": 0.0029255973739538573,
+        "mean_absolute_error": 0.000422556293635593,
+        "max_absolute_error": 0.1628786325454712
       }
     },
     {
       "delta": 0.005,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 22.456084777029105,
-        "max_cm-1": 3234.5186237752423,
-        "mean_abs_cm-1": 1160.5279234558573,
+        "min_cm-1": 22.43571685393174,
+        "max_cm-1": 3234.5183387602538,
+        "mean_abs_cm-1": 1160.5277090080144,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0010403686406417066,
-        "mean_absolute_error": 0.00023244716088169836,
-        "max_absolute_error": 0.05821622908115387
+        "rms_error": 0.0010311083385129531,
+        "mean_absolute_error": 0.0002308576782478419,
+        "max_absolute_error": 0.05784481763839722
       }
     },
     {
       "delta": 0.001,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 22.473456446832422,
-        "max_cm-1": 3234.3780305625205,
-        "mean_abs_cm-1": 1160.543917023254,
+        "min_cm-1": 22.494579829948965,
+        "max_cm-1": 3234.3776995133862,
+        "mean_abs_cm-1": 1160.544160975146,
         "n_negative": 0,
         "n_small_negative": 0
       }
@@ -81,135 +81,114 @@
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": -4388.024919525308,
-        "max_cm-1": 7609.68099788947,
-        "mean_abs_cm-1": 1297.547065597192,
-        "n_negative": 76,
-        "n_small_negative": 3
+        "min_cm-1": 22.532443046198438,
+        "max_cm-1": 3234.431126143685,
+        "mean_abs_cm-1": 1160.541265062187,
+        "n_negative": 0,
+        "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 8.576719508102505,
-        "mean_absolute_error": 3.5796867220494084,
-        "max_absolute_error": 219.3857380449772
+        "rms_error": 0.0003920558228340461,
+        "mean_absolute_error": 0.00017353027269677881,
+        "max_absolute_error": 0.013151556253433228
       }
     },
     {
       "method": "double_backward",
       "symmetrize": false,
-      "symmetry_error": 0.0002689361572265625,
+      "symmetry_error": 7.62939453125e-06,
       "summary": {
-        "min_cm-1": -4388.005032775616,
-        "max_cm-1": 7609.507787693416,
-        "mean_abs_cm-1": 1297.5513895508236,
-        "n_negative": 75,
-        "n_small_negative": 2
+        "min_cm-1": 22.533550251846872,
+        "max_cm-1": 3234.43117439071,
+        "mean_abs_cm-1": 1160.5412757938784,
+        "n_negative": 0,
+        "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 8.576663394525662,
-        "mean_absolute_error": 3.5796527121055606,
-        "max_absolute_error": 219.38560071587563
+        "rms_error": 0.0003922282098365262,
+        "mean_absolute_error": 0.00017355924923160402,
+        "max_absolute_error": 0.013166815042495728
       }
     },
     {
       "method": "vmap",
       "symmetrize": true,
-      "symmetry_error": 0.0,
-      "summary": {
-        "min_cm-1": -4388.000471934396,
-        "max_cm-1": 7609.624928070319,
-        "mean_abs_cm-1": 1297.5456845958824,
-        "n_negative": 76,
-        "n_small_negative": 3
-      },
-      "metrics_vs_reference": {
-        "rms_error": 8.576708668202338,
-        "mean_absolute_error": 3.579685074356923,
-        "max_absolute_error": 219.38633313775063
-      }
+      "symmetry_error": null,
+      "error": "CUDA out of memory. Tried to allocate 840.00 MiB. GPU 0 has a total capacity of 15.47 GiB of which 153.75 MiB is free. Including non-PyTorch memory, this process has 14.79 GiB memory in use. Of the allocated memory 12.94 GiB is allocated by PyTorch, and 1.62 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
     },
     {
       "method": "vmap",
       "symmetrize": false,
-      "symmetry_error": 0.0003223419189453125,
-      "summary": {
-        "min_cm-1": -4387.952928972569,
-        "max_cm-1": 7609.427118197733,
-        "mean_abs_cm-1": 1297.5481006250484,
-        "n_negative": 75,
-        "n_small_negative": 2
-      },
-      "metrics_vs_reference": {
-        "rms_error": 8.576628029212314,
-        "mean_absolute_error": 3.5796370865984373,
-        "max_absolute_error": 219.38433423638344
-      }
+      "symmetry_error": null,
+      "error": "CUDA out of memory. Tried to allocate 1.84 GiB. GPU 0 has a total capacity of 15.47 GiB of which 1.10 GiB is free. Including non-PyTorch memory, this process has 13.85 GiB memory in use. Of the allocated memory 12.36 GiB is allocated by PyTorch, and 1.25 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
     },
     {
       "method": "fairchem",
       "symmetrize": true,
-      "symmetry_error": 0.0,
-      "summary": {
-        "min_cm-1": -4388.0626561877025,
-        "max_cm-1": 7609.671145975506,
-        "mean_abs_cm-1": 1297.5458828692613,
-        "n_negative": 75,
-        "n_small_negative": 2
-      },
-      "metrics_vs_reference": {
-        "rms_error": 8.576705149300883,
-        "mean_absolute_error": 3.5796799980842255,
-        "max_absolute_error": 219.38360181450844
-      }
+      "symmetry_error": null,
+      "error": "CUDA out of memory. Tried to allocate 840.00 MiB. GPU 0 has a total capacity of 15.47 GiB of which 65.00 MiB is free. Including non-PyTorch memory, this process has 14.88 GiB memory in use. Of the allocated memory 13.47 GiB is allocated by PyTorch, and 1.18 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
     },
     {
       "method": "fairchem",
       "symmetrize": false,
-      "symmetry_error": 0.00034332275390625,
-      "summary": {
-        "min_cm-1": -4388.014585409916,
-        "max_cm-1": 7609.509943729594,
-        "mean_abs_cm-1": 1297.5518140645222,
-        "n_negative": 74,
-        "n_small_negative": 1
-      },
-      "metrics_vs_reference": {
-        "rms_error": 8.576678153805126,
-        "mean_absolute_error": 3.5796622059680216,
-        "max_absolute_error": 219.38856092095375
-      }
+      "symmetry_error": null,
+      "error": "CUDA out of memory. Tried to allocate 1.84 GiB. GPU 0 has a total capacity of 15.47 GiB of which 930.06 MiB is free. Including non-PyTorch memory, this process has 14.04 GiB memory in use. Of the allocated memory 11.66 GiB is allocated by PyTorch, and 2.14 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)"
     },
     {
       "method": "fairchem_loop",
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": -4387.949587404165,
-        "max_cm-1": 7609.572452404533,
-        "mean_abs_cm-1": 1297.5450192238952,
-        "n_negative": 74,
-        "n_small_negative": 1
+        "min_cm-1": 22.531725495008008,
+        "max_cm-1": 3234.4312771142804,
+        "mean_abs_cm-1": 1160.54125232704,
+        "n_negative": 0,
+        "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 8.576706385501696,
-        "mean_absolute_error": 3.579681743118002,
-        "max_absolute_error": 219.38546338677406
+        "rms_error": 0.00039228549995715904,
+        "mean_absolute_error": 0.00017355806932251386,
+        "max_absolute_error": 0.013166815042495728
       }
     },
     {
       "method": "fairchem_loop",
       "symmetrize": false,
-      "symmetry_error": 0.00034332275390625,
+      "symmetry_error": 1.1444091796875e-05,
       "summary": {
-        "min_cm-1": -4387.969113600488,
-        "max_cm-1": 7609.471565181308,
-        "mean_abs_cm-1": 1297.5551024518336,
-        "n_negative": 75,
-        "n_small_negative": 2
+        "min_cm-1": 22.532672455597837,
+        "max_cm-1": 3234.4316133950947,
+        "mean_abs_cm-1": 1160.5413532207917,
+        "n_negative": 0,
+        "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 8.57665000234584,
-        "mean_absolute_error": 3.5796544737096703,
-        "max_absolute_error": 219.3851276934147
+        "rms_error": 0.0003919729620555683,
+        "mean_absolute_error": 0.00017352765947732464,
+        "max_absolute_error": 0.013151556253433228
+      }
+    },
+    {
+      "method": "double_backward_inference_settings",
+      "symmetrize": true,
+      "symmetry_error": null,
+      "error": "Trying to backward through the graph a second time (or directly access saved tensors after they have already been freed). Saved intermediate values of the graph are freed when you call .backward() or autograd.grad(). Specify retain_graph=True if you need to backward through the graph a second time or if you need to access saved tensors after calling backward."
+    },
+    {
+      "method": "double_backward_float64",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 22.53290114773457,
+        "max_cm-1": 3234.432123554084,
+        "mean_abs_cm-1": 1160.5411104985233,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.0003913445528791011,
+        "mean_absolute_error": 0.0001733997279384056,
+        "max_absolute_error": 0.013180152561290015
       }
     }
   ]

@@ -38,6 +38,7 @@ class StandaloneUMACalculator(Calculator):
         device: str | None = None,
         default_charge: int = 0,
         default_spin: int = 1,
+        inference_settings: Any | None = None,
         **kwargs: Any,
     ) -> None:
         super().__init__(**kwargs)
@@ -45,6 +46,7 @@ class StandaloneUMACalculator(Calculator):
         self.device = device or _resolve_default_device()
         self.default_charge = int(default_charge)
         self.default_spin = int(default_spin)
+        self.inference_settings = inference_settings
         self._calc: Any | None = None
         self.predictor: Any | None = None
 
@@ -123,6 +125,9 @@ class StandaloneUMACalculator(Calculator):
         atoms_copy = self.atoms.copy()
         self._ensure_charge_spin(atoms_copy)
 
+        # Get model dtype to ensure data matches
+        model_dtype = next(self.predictor.model.parameters()).dtype
+
         data = AtomicData.from_ase(
             atoms_copy,
             task_name="omol",
@@ -131,6 +136,15 @@ class StandaloneUMACalculator(Calculator):
         ).to(device)
 
         batch = data_list_collater([data], otf_graph=True).to(device)
+
+        # Convert batch to match model dtype after collation
+        # This ensures dtype consistency throughout the computation
+        # The collater may create new tensors, so we convert after collation
+        if batch.pos.dtype != model_dtype:
+            batch.pos = batch.pos.to(dtype=model_dtype)
+        if hasattr(batch, 'cell') and batch.cell is not None and batch.cell.dtype != model_dtype:
+            batch.cell = batch.cell.to(dtype=model_dtype)
+
         # Ensure positions have requires_grad=True for gradient computation
         # Note: otf_graph=True doesn't automatically set this, it's required for autograd
         batch.pos.requires_grad_(True)
@@ -232,7 +246,12 @@ class StandaloneUMACalculator(Calculator):
 
         device = "cuda" if self.device == "cuda" else "cpu"
         try:
-            self.predictor = pretrained_mlip.get_predict_unit(self.model_name, device=device)
+            if self.inference_settings is not None:
+                self.predictor = pretrained_mlip.get_predict_unit(
+                    self.model_name, device=device, inference_settings=self.inference_settings
+                )
+            else:
+                self.predictor = pretrained_mlip.get_predict_unit(self.model_name, device=device)
         except Exception as exc:
             raise CalculatorSetupError(
                 f"Failed to load UMA model '{self.model_name}': {exc}"
@@ -331,12 +350,119 @@ class StandaloneUMACalculator(Calculator):
 
 
 def get_uma_calculator(model_name: str = "uma-s-1p1", **kwargs: Any) -> StandaloneUMACalculator:
-    """Convenience factory to match the original script signature."""
+    """Create a convenience factory to match the original script signature."""
     return StandaloneUMACalculator(model_name=model_name, **kwargs)
+
+
+def get_uma_calculator_with_inference_settings(
+    model_name: str = "uma-s-1p1",
+    *,
+    tf32: bool = False,
+    merge_mole: bool = True,
+    compile: bool = False,
+    activation_checkpointing: bool = False,
+    internal_graph_gen_version: int = 2,
+    external_graph_gen: bool = False,
+    device: str | None = None,
+    **kwargs: Any,
+) -> StandaloneUMACalculator:
+    """Create UMA calculator with custom InferenceSettings.
+
+    Parameters
+    ----------
+    model_name : str
+        UMA model name (default: "uma-s-1p1")
+    tf32 : bool
+        Enable TensorFloat-32 (default: False)
+    merge_mole : bool
+        Merge molecular operations (default: True)
+    compile : bool
+        Enable torch.compile (default: False)
+    activation_checkpointing : bool
+        Enable activation checkpointing (default: False)
+    internal_graph_gen_version : int
+        Internal graph generation version (default: 2)
+    external_graph_gen : bool
+        Use external graph generation (default: False)
+    device : str | None
+        Device to use ("cuda" or "cpu", default: auto-detect)
+    **kwargs
+        Additional arguments passed to StandaloneUMACalculator
+
+    Returns
+    -------
+    StandaloneUMACalculator
+        Calculator instance with specified inference settings
+    """
+    try:
+        from fairchem.core.units.mlip_unit import InferenceSettings
+    except ImportError:
+        # Fallback: try alternative import path
+        try:
+            from fairchem.core import InferenceSettings
+        except ImportError:
+            raise ImportError(
+                "InferenceSettings not found. Update fairchem-core to a version that supports it."
+            ) from None
+
+    inference_settings = InferenceSettings(
+        tf32=tf32,
+        merge_mole=merge_mole,
+        compile=compile,
+        activation_checkpointing=activation_checkpointing,
+        internal_graph_gen_version=internal_graph_gen_version,
+        external_graph_gen=external_graph_gen,
+    )
+
+    return StandaloneUMACalculator(
+        model_name=model_name,
+        device=device,
+        inference_settings=inference_settings,
+        **kwargs,
+    )
+
+
+def get_uma_calculator_with_dtype(
+    model_name: str = "uma-s-1p1",
+    *,
+    dtype: str = "float32",
+    device: str | None = None,
+    **kwargs: Any,
+) -> StandaloneUMACalculator:
+    """Create UMA calculator and set model to specified dtype.
+
+    Parameters
+    ----------
+    model_name : str
+        UMA model name (default: "uma-s-1p1")
+    dtype : str
+        Model dtype: "float32", "float64", or "double" (default: "float32")
+    device : str | None
+        Device to use ("cuda" or "cpu", default: auto-detect)
+    **kwargs
+        Additional arguments passed to StandaloneUMACalculator
+
+    Returns
+    -------
+    StandaloneUMACalculator
+        Calculator instance with model set to specified dtype
+    """
+    calc = StandaloneUMACalculator(model_name=model_name, device=device, **kwargs)
+    calc.ensure_loaded()
+
+    # Set model precision after loading
+    if dtype in ("float64", "double"):
+        calc._set_model_precision("double")
+    else:
+        calc._set_model_precision("float32")
+
+    return calc
 
 
 __all__ = [
     "StandaloneUMACalculator",
     "get_uma_calculator",
+    "get_uma_calculator_with_inference_settings",
+    "get_uma_calculator_with_dtype",
 ]
 

@@ -44,6 +44,8 @@ helper_module = importlib.util.module_from_spec(helper_spec)
 sys.modules.setdefault(HELPER_MODULE, helper_module)
 helper_spec.loader.exec_module(helper_module)
 get_uma_calculator = helper_module.get_uma_calculator
+get_uma_calculator_with_inference_settings = helper_module.get_uma_calculator_with_inference_settings
+get_uma_calculator_with_dtype = helper_module.get_uma_calculator_with_dtype
 
 STRUCTURE_PATH = SCRIPT_PATH.with_name(f"{SCRIPT_STEM}.xyz")
 OUTPUT_PATH = SCRIPT_PATH.with_name(f"{SCRIPT_STEM}.json")
@@ -110,11 +112,11 @@ def compute_finite_difference_hessian(
     atoms_copy = atoms.copy()
     atoms_copy.calc = calculator
     enforce_python_ints(atoms_copy)
-    
+
     # Use ASE Vibrations class for finite difference Hessian
     # Create temporary name to avoid cache conflicts
-    import tempfile
     import os
+    import tempfile
     with tempfile.TemporaryDirectory() as tmpdir:
         vib = Vibrations(atoms_copy, delta=delta, name=os.path.join(tmpdir, 'vib'))
         vib.run()
@@ -122,7 +124,7 @@ def compute_finite_difference_hessian(
         hessian = vib.H.copy()
         # Clean up cache to free memory
         vib.clean()
-    
+
     # Compute symmetry error before any additional symmetrization
     # (ASE already symmetrizes in read(), but check anyway)
     symmetry_error = float(np.max(np.abs(hessian - hessian.T)))
@@ -235,6 +237,83 @@ def main() -> None:
                     "metrics": compute_metrics(hessian, reference_hessian),
                 }
             )
+
+    # ------------------------------------------------------------------
+    # Test new inference settings approaches
+    # ------------------------------------------------------------------
+    print("\nTesting new inference settings approaches...")
+
+    # Test with InferenceSettings
+    try:
+        calc_inf = get_uma_calculator_with_inference_settings(
+            model_name="uma-s-1p1",
+            device=device,
+            tf32=False,
+            merge_mole=True,
+            compile=False,
+            activation_checkpointing=False,
+            internal_graph_gen_version=2,
+            external_graph_gen=False,
+        )
+        calc_inf.ensure_loaded()
+        # Use a fresh atoms copy with no calculator reference to avoid graph reuse issues
+        atoms_fresh = atoms.copy()
+        atoms_fresh.calc = None
+        hessian_inf = calc_inf.get_hessian(atoms_fresh, method="double_backward", symmetrize=True)
+        symmetry_error = float(np.max(np.abs(hessian_inf - hessian_inf.T)))
+        freqs = compute_frequencies_cm(hessian_inf, masses)
+        analytical_results.append(
+            {
+                "method": "double_backward_inference_settings",
+                "symmetrize": True,
+                "symmetry_error": symmetry_error,
+                "summary": summarize_frequencies(freqs),
+                "metrics": compute_metrics(hessian_inf, reference_hessian),
+            }
+        )
+        print("  ✓ InferenceSettings test completed")
+    except Exception as exc:
+        analytical_results.append(
+            {
+                "method": "double_backward_inference_settings",
+                "symmetrize": True,
+                "error": str(exc),
+            }
+        )
+        print(f"  ✗ InferenceSettings test failed: {exc}")
+
+    # Test with float64 dtype
+    try:
+        calc_f64 = get_uma_calculator_with_dtype(
+            model_name="uma-s-1p1",
+            dtype="float64",
+            device=device,
+        )
+        # Use a fresh atoms copy with no calculator reference to avoid graph reuse issues
+        atoms_fresh = atoms.copy()
+        atoms_fresh.calc = None
+        hessian_f64 = calc_f64.get_hessian(atoms_fresh, method="double_backward", symmetrize=True)
+        symmetry_error = float(np.max(np.abs(hessian_f64 - hessian_f64.T)))
+        freqs = compute_frequencies_cm(hessian_f64, masses)
+        analytical_results.append(
+            {
+                "method": "double_backward_float64",
+                "symmetrize": True,
+                "symmetry_error": symmetry_error,
+                "summary": summarize_frequencies(freqs),
+                "metrics": compute_metrics(hessian_f64, reference_hessian),
+            }
+        )
+        print("  ✓ float64 dtype test completed")
+    except Exception as exc:
+        analytical_results.append(
+            {
+                "method": "double_backward_float64",
+                "symmetrize": True,
+                "error": str(exc),
+            }
+        )
+        print(f"  ✗ float64 dtype test failed: {exc}")
 
     # ------------------------------------------------------------------
     # Prepare JSON-friendly report

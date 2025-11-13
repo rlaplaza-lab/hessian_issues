@@ -1,15 +1,15 @@
 {
   "structure": "example_2.xyz",
   "n_atoms": 3,
-  "device": "cpu",
+  "device": "cuda",
   "reference": {
     "source": "finite_difference",
     "delta": 0.001,
     "symmetry_error": 0.0,
     "summary": {
-      "min_cm-1": 1621.6773390894105,
-      "max_cm-1": 3920.108128767283,
-      "mean_abs_cm-1": 3120.7824778932977,
+      "min_cm-1": 1621.66393857775,
+      "max_cm-1": 3920.0733511740223,
+      "mean_abs_cm-1": 3120.755161024063,
       "n_negative": 0,
       "n_small_negative": 0
     }
@@ -19,57 +19,57 @@
       "delta": 0.05,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1599.9118753356834,
-        "max_cm-1": 3928.1160274139543,
-        "mean_abs_cm-1": 3118.9441134985827,
+        "min_cm-1": 1599.912140515096,
+        "max_cm-1": 3928.116669686059,
+        "mean_abs_cm-1": 3118.944645356854,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.10059037458290158,
-        "mean_absolute_error": 0.060131494129570584,
-        "max_absolute_error": 0.2667350322008133
+        "rms_error": 0.10075446724424685,
+        "mean_absolute_error": 0.060233323303242645,
+        "max_absolute_error": 0.2665407955646515
       }
     },
     {
       "delta": 0.01,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1620.8123929116991,
-        "max_cm-1": 3920.489681716907,
-        "mean_abs_cm-1": 3120.749812961836,
+        "min_cm-1": 1620.812081650878,
+        "max_cm-1": 3920.4867553435347,
+        "mean_abs_cm-1": 3120.7478360738746,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.00463637956788645,
-        "mean_absolute_error": 0.0027936331195635186,
-        "max_absolute_error": 0.012858211994171143
+        "rms_error": 0.0048341544154811246,
+        "mean_absolute_error": 0.002905769850240118,
+        "max_absolute_error": 0.014144182205200195
       }
     },
     {
       "delta": 0.005,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1621.4607930619034,
-        "max_cm-1": 3920.260285021817,
-        "mean_abs_cm-1": 3120.812157145338,
+        "min_cm-1": 1621.4631364865663,
+        "max_cm-1": 3920.2586289087685,
+        "mean_abs_cm-1": 3120.812350396052,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0018352741464465131,
-        "mean_absolute_error": 0.0010156614158018699,
-        "max_absolute_error": 0.006766617298126221
+        "rms_error": 0.0020921671874194153,
+        "mean_absolute_error": 0.0011307224526502337,
+        "max_absolute_error": 0.008034706115722656
       }
     },
     {
       "delta": 0.001,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1621.6773390894105,
-        "max_cm-1": 3920.108128767283,
-        "mean_abs_cm-1": 3120.7824778932977,
+        "min_cm-1": 1621.66393857775,
+        "max_cm-1": 3920.0733511740223,
+        "mean_abs_cm-1": 3120.755161024063,
         "n_negative": 0,
         "n_small_negative": 0
       }
@@ -81,33 +81,33 @@
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1621.677593919513,
-        "max_cm-1": 3920.1711331286474,
-        "mean_abs_cm-1": 3120.824054762872,
+        "min_cm-1": 1621.677900838046,
+        "max_cm-1": 3920.1706087001526,
+        "mean_abs_cm-1": 3120.8238077776846,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0010478752085615127,
-        "mean_absolute_error": 0.0004893671212405415,
-        "max_absolute_error": 0.005141913890838623
+        "rms_error": 0.0013077451440872748,
+        "mean_absolute_error": 0.0006071887973507649,
+        "max_absolute_error": 0.006438136100769043
       }
     },
     {
       "method": "double_backward",
       "symmetrize": false,
-      "symmetry_error": 7.62939453125e-06,
+      "symmetry_error": 5.7220458984375e-06,
       "summary": {
-        "min_cm-1": 1621.6777201070176,
-        "max_cm-1": 3920.1710013866827,
-        "mean_abs_cm-1": 3120.824003469977,
+        "min_cm-1": 1621.6781096868947,
+        "max_cm-1": 3920.170609599662,
+        "mean_abs_cm-1": 3120.8238914503095,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0010477124898495224,
-        "mean_absolute_error": 0.000489275904548838,
-        "max_absolute_error": 0.005141913890838623
+        "rms_error": 0.0013079250438198095,
+        "mean_absolute_error": 0.0006076000566826493,
+        "max_absolute_error": 0.006430506706237793
       }
     },
     {
@@ -115,101 +115,124 @@
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1621.6777697000089,
-        "max_cm-1": 3920.171339474826,
-        "mean_abs_cm-1": 3120.8242591735375,
+        "min_cm-1": 1621.6779665409745,
+        "max_cm-1": 3920.1707307033303,
+        "mean_abs_cm-1": 3120.8239083411486,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0010485494654337288,
-        "mean_absolute_error": 0.0004895228778208059,
-        "max_absolute_error": 0.005149543285369873
+        "rms_error": 0.0013077954931401332,
+        "mean_absolute_error": 0.0006073470328851138,
+        "max_absolute_error": 0.006430506706237793
       }
     },
     {
       "method": "vmap",
+      "symmetrize": false,
+      "symmetry_error": 3.814697265625e-06,
+      "summary": {
+        "min_cm-1": 1621.6779929019044,
+        "max_cm-1": 3920.170646174423,
+        "mean_abs_cm-1": 3120.8238752250254,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.0013075329171722818,
+        "mean_absolute_error": 0.0006072516642832972,
+        "max_absolute_error": 0.006430506706237793
+      }
+    },
+    {
+      "method": "fairchem",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1621.6780207304157,
+        "max_cm-1": 3920.170448107082,
+        "mean_abs_cm-1": 3120.823740833997,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.0013057213186587933,
+        "mean_absolute_error": 0.0006065427656752242,
+        "max_absolute_error": 0.006422877311706543
+      }
+    },
+    {
+      "method": "fairchem",
+      "symmetrize": false,
+      "symmetry_error": 3.814697265625e-06,
+      "summary": {
+        "min_cm-1": 1621.6777904702392,
+        "max_cm-1": 3920.17070874603,
+        "mean_abs_cm-1": 3120.82384017678,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.0013069372703053597,
+        "mean_absolute_error": 0.0006068327254163143,
+        "max_absolute_error": 0.006430506706237793
+      }
+    },
+    {
+      "method": "fairchem_loop",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1621.6779280158626,
+        "max_cm-1": 3920.170649620282,
+        "mean_abs_cm-1": 3120.823842791444,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.0013071075423963774,
+        "mean_absolute_error": 0.0006069228186303009,
+        "max_absolute_error": 0.006430506706237793
+      }
+    },
+    {
+      "method": "fairchem_loop",
       "symmetrize": false,
       "symmetry_error": 5.7220458984375e-06,
       "summary": {
-        "min_cm-1": 1621.6777662978923,
-        "max_cm-1": 3920.1712203167563,
-        "mean_abs_cm-1": 3120.8241615836764,
+        "min_cm-1": 1621.6777156719875,
+        "max_cm-1": 3920.1704357384374,
+        "mean_abs_cm-1": 3120.823635495948,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0010483108284633268,
-        "mean_absolute_error": 0.0004894155618608355,
-        "max_absolute_error": 0.005149543285369873
+        "rms_error": 0.001306114696845974,
+        "mean_absolute_error": 0.0006068839369385361,
+        "max_absolute_error": 0.006422877311706543
       }
     },
     {
-      "method": "fairchem",
+      "method": "double_backward_inference_settings",
+      "symmetrize": true,
+      "symmetry_error": null,
+      "error": "Trying to backward through the graph a second time (or directly access saved tensors after they have already been freed). Saved intermediate values of the graph are freed when you call .backward() or autograd.grad(). Specify retain_graph=True if you need to backward through the graph a second time or if you need to access saved tensors after calling backward."
+    },
+    {
+      "method": "double_backward_float64",
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1621.677797751485,
-        "max_cm-1": 3920.1709690928624,
-        "mean_abs_cm-1": 3120.8240068209093,
+        "min_cm-1": 1621.6775922707766,
+        "max_cm-1": 3920.1712361293608,
+        "mean_abs_cm-1": 3120.824119638582,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0010452174733181852,
-        "mean_absolute_error": 0.0004879965778080526,
-        "max_absolute_error": 0.005134284496307373
-      }
-    },
-    {
-      "method": "fairchem",
-      "symmetrize": false,
-      "symmetry_error": 7.62939453125e-06,
-      "summary": {
-        "min_cm-1": 1621.6778747975652,
-        "max_cm-1": 3920.171016142498,
-        "mean_abs_cm-1": 3120.824067914822,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 0.0010469614101914276,
-        "mean_absolute_error": 0.0004885627166351522,
-        "max_absolute_error": 0.005149543285369873
-      }
-    },
-    {
-      "method": "fairchem_loop",
-      "symmetrize": true,
-      "symmetry_error": 0.0,
-      "summary": {
-        "min_cm-1": 1621.6778467486902,
-        "max_cm-1": 3920.171017443753,
-        "mean_abs_cm-1": 3120.824051785243,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 0.0010457198122078768,
-        "mean_absolute_error": 0.000488204201089232,
-        "max_absolute_error": 0.005134284496307373
-      }
-    },
-    {
-      "method": "fairchem_loop",
-      "symmetrize": false,
-      "symmetry_error": 8.58306884765625e-06,
-      "summary": {
-        "min_cm-1": 1621.677699939416,
-        "max_cm-1": 3920.170842962323,
-        "mean_abs_cm-1": 3120.823880785481,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 0.0010455481006331191,
-        "mean_absolute_error": 0.00048800397204454044,
-        "max_absolute_error": 0.005134284496307373
+        "rms_error": 0.001311655347110609,
+        "mean_absolute_error": 0.0006094702182850792,
+        "max_absolute_error": 0.006451660514457558
       }
     }
   ]
