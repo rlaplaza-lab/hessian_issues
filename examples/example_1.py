@@ -3,7 +3,7 @@
 
 Usage
 -----
-    python example_2.py
+    python example_1.py
 
 Requirements
 ------------
@@ -35,7 +35,9 @@ from ase.vibrations import Vibrations
 
 SCRIPT_PATH = Path(__file__).resolve()
 SCRIPT_STEM = SCRIPT_PATH.stem
-HELPER_PATH = SCRIPT_PATH.with_name("hessian_helpers.py")
+# Find repository root (parent of examples/ directory)
+REPO_ROOT = SCRIPT_PATH.parent.parent
+HELPER_PATH = REPO_ROOT / "src" / "hessian_helpers.py"
 HELPER_MODULE = "hessian_helpers"
 helper_spec = importlib.util.spec_from_file_location(HELPER_MODULE, HELPER_PATH)
 if helper_spec is None or helper_spec.loader is None:
@@ -47,8 +49,8 @@ get_uma_calculator = helper_module.get_uma_calculator
 get_uma_calculator_with_inference_settings = helper_module.get_uma_calculator_with_inference_settings
 get_uma_calculator_with_dtype = helper_module.get_uma_calculator_with_dtype
 
-STRUCTURE_PATH = SCRIPT_PATH.with_name(f"{SCRIPT_STEM}.xyz")
-OUTPUT_PATH = SCRIPT_PATH.with_name(f"{SCRIPT_STEM}.json")
+STRUCTURE_PATH = REPO_ROOT / "data" / f"{SCRIPT_STEM}.xyz"
+OUTPUT_PATH = REPO_ROOT / "results" / f"{SCRIPT_STEM}.json"
 
 
 @dataclass

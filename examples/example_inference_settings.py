@@ -26,7 +26,9 @@ from pathlib import Path
 from ase.io import read
 
 SCRIPT_PATH = Path(__file__).resolve()
-HELPER_PATH = SCRIPT_PATH.with_name("hessian_helpers.py")
+# Find repository root (parent of examples/ directory)
+REPO_ROOT = SCRIPT_PATH.parent.parent
+HELPER_PATH = REPO_ROOT / "src" / "hessian_helpers.py"
 HELPER_MODULE = "hessian_helpers"
 
 helper_spec = importlib.util.spec_from_file_location(HELPER_MODULE, HELPER_PATH)
@@ -54,7 +56,7 @@ def select_device() -> str:
 def main() -> None:
     """Demonstrate InferenceSettings usage for UMA Hessian computation."""
     # Load a structure
-    structure_path = SCRIPT_PATH.with_name("example_3.xyz")
+    structure_path = REPO_ROOT / "data" / "example_3.xyz"
     if not structure_path.exists():
         raise SystemExit(f"Structure file not found: {structure_path}")
 

@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""UMA Hessian comparison example (standalone).
+"""UMA Hessian comparison example (standalone) - Methane test case.
+
+This example reproduces the methane Hessian test that fails in the test suite.
+It uses the same methane molecule from test_uma_hessian_methane to investigate
+the discrepancy between analytical and finite-difference Hessians.
 
 Usage
 -----
-    python example_1.py
+    python example_3.py
 
 Requirements
 ------------
@@ -16,7 +20,7 @@ Outputs
 The script prints finite-difference and analytical Hessian statistics to stdout
 and saves a JSON summary in ``<script_stem>.json`` alongside the script. The
 geometry is read from ``<script_stem>.xyz`` in the same directory, so the script
-can be copied or renamed (for example_2) without modification.
+can be copied or renamed (for example_3) without modification.
 """
 
 from __future__ import annotations
@@ -35,7 +39,9 @@ from ase.vibrations import Vibrations
 
 SCRIPT_PATH = Path(__file__).resolve()
 SCRIPT_STEM = SCRIPT_PATH.stem
-HELPER_PATH = SCRIPT_PATH.with_name("hessian_helpers.py")
+# Find repository root (parent of examples/ directory)
+REPO_ROOT = SCRIPT_PATH.parent.parent
+HELPER_PATH = REPO_ROOT / "src" / "hessian_helpers.py"
 HELPER_MODULE = "hessian_helpers"
 helper_spec = importlib.util.spec_from_file_location(HELPER_MODULE, HELPER_PATH)
 if helper_spec is None or helper_spec.loader is None:
@@ -47,8 +53,8 @@ get_uma_calculator = helper_module.get_uma_calculator
 get_uma_calculator_with_inference_settings = helper_module.get_uma_calculator_with_inference_settings
 get_uma_calculator_with_dtype = helper_module.get_uma_calculator_with_dtype
 
-STRUCTURE_PATH = SCRIPT_PATH.with_name(f"{SCRIPT_STEM}.xyz")
-OUTPUT_PATH = SCRIPT_PATH.with_name(f"{SCRIPT_STEM}.json")
+STRUCTURE_PATH = REPO_ROOT / "data" / f"{SCRIPT_STEM}.xyz"
+OUTPUT_PATH = REPO_ROOT / "results" / f"{SCRIPT_STEM}.json"
 
 
 @dataclass
@@ -172,6 +178,7 @@ def main() -> None:
     # ------------------------------------------------------------------
     # Finite-difference Hessians
     # ------------------------------------------------------------------
+    # Use same delta values as test (TIGHT_DELTA = 0.001) plus a range for comparison
     fd_steps = [0.05, 0.01, 0.005, 0.001]
     fd_results: list[dict[str, Any]] = []
 

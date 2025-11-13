@@ -40,54 +40,61 @@ For GPU support, ensure PyTorch is installed with CUDA support. The scripts auto
 Run the example scripts from the repository root:
 
 ```bash
-python example_1.py
-python example_2.py
-python example_3.py
-python example_4.py
+python examples/example_1.py
+python examples/example_2.py
+python examples/example_3.py
+python examples/example_4.py
 ```
 
 Each script:
-1. Loads the corresponding `.xyz` geometry file from the same directory
+1. Loads the corresponding `.xyz` geometry file from the `data/` directory
 2. Computes finite-difference Hessians at multiple step sizes (0.05, 0.01, 0.005, 0.001 Å)
 3. Computes analytical Hessians using multiple methods (with and without symmetrization)
-4. Compares results and saves a JSON report
+4. Compares results and saves a JSON report to the `results/` directory
 
 ### Additional Examples
 
-- `example_inference_settings.py`: Demonstrates usage of `InferenceSettings` for custom model configuration
+- `examples/example_inference_settings.py`: Demonstrates usage of `InferenceSettings` for custom model configuration
 
 ## Output
 
 Each script generates:
 - **Console output**: Frequency statistics and error metrics comparing analytical and finite-difference methods
-- **JSON report**: Detailed results saved to `<script_name>.json` with:
+- **JSON report**: Detailed results saved to `results/<script_name>.json` with:
   - Reference finite-difference Hessian (smallest step size)
   - Finite-difference results at all step sizes with metrics vs. reference
   - Analytical method results with metrics vs. reference
   - Frequency summaries (min, max, mean absolute, negative frequency counts)
 
-## Files
+## Repository Structure
 
-### Core Implementation
-- `hessian_helpers.py`: Standalone UMA calculator implementation with Hessian computation methods
-
-### Example Scripts
-- `example_1.py`: Large organic molecule test case (51 atoms)
-- `example_2.py`: Water molecule (H₂O) test case
-- `example_3.py`: Methane molecule with distorted geometry (reproduces failing test from test suite)
-- `example_4.py`: Methane molecule with realistic equilibrium tetrahedral geometry (C-H ~1.087 Å)
-- `example_inference_settings.py`: Demonstration of InferenceSettings usage
-
-### Input Files
-- `example_1.xyz`, `example_2.xyz`, `example_3.xyz`, `example_4.xyz`: Input molecular geometries
-
-### Output Files (Generated)
-- `example_1.json`, `example_2.json`, `example_3.json`, `example_4.json`: Detailed analysis results
+```
+/hessian_issues/
+├── README.md                 # This file
+├── src/                      # Core implementation
+│   └── hessian_helpers.py    # Standalone UMA calculator with Hessian computation
+├── examples/                 # Example scripts
+│   ├── example_1.py          # Large organic molecule test case (51 atoms)
+│   ├── example_2.py          # Water molecule (H₂O) test case
+│   ├── example_3.py          # Methane with distorted geometry
+│   ├── example_4.py          # Methane with equilibrium geometry
+│   └── example_inference_settings.py  # InferenceSettings demonstration
+├── data/                     # Input molecular geometries
+│   ├── example_1.xyz
+│   ├── example_2.xyz
+│   ├── example_3.xyz
+│   └── example_4.xyz
+└── results/                  # Generated output files (created by scripts)
+    ├── example_1.json
+    ├── example_2.json
+    ├── example_3.json
+    └── example_4.json
+```
 
 ## Reproducibility
 
 All scripts are designed to be self-contained and reproducible:
-- Scripts automatically locate input files relative to their own location
+- Scripts automatically locate the repository root and find files in `src/`, `data/`, and `results/` directories
 - Device selection (CUDA/CPU) is automatic based on availability
 - Model weights are downloaded automatically on first use
 - Results are saved in a standardized JSON format for easy comparison
