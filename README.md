@@ -72,8 +72,8 @@ Each script generates:
 - `hessian_helpers.py`: Standalone UMA calculator implementation with Hessian computation methods
 
 ### Example Scripts
-- `example_1.py`: Basic water molecule test case
-- `example_2.py`: Extended water molecule test case  
+- `example_1.py`: Large organic molecule test case (51 atoms)
+- `example_2.py`: Water molecule (H₂O) test case
 - `example_3.py`: Methane molecule with distorted geometry (reproduces failing test from test suite)
 - `example_4.py`: Methane molecule with realistic equilibrium tetrahedral geometry (C-H ~1.087 Å)
 - `example_inference_settings.py`: Demonstration of InferenceSettings usage
@@ -94,7 +94,7 @@ All scripts are designed to be self-contained and reproducible:
 
 ## Example Descriptions
 
-- **example_1.py**: Basic water molecule (H₂O) test case for initial validation
-- **example_2.py**: Extended water molecule test case with additional validation
+- **example_1.py**: Large organic molecule test case (51 atoms) for validation on complex systems
+- **example_2.py**: Water molecule (H₂O) test case for validation on a simple, well-characterized system
 - **example_3.py**: Methane (CH₄) molecule with distorted geometry, reproducing a failing test case from the test suite to investigate Hessian accuracy issues
 - **example_4.py**: Methane molecule with realistic equilibrium tetrahedral geometry (C-H bond length ~1.087 Å) to compare with the distorted geometry case and determine if accuracy issues are geometry-dependent
