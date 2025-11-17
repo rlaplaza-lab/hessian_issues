@@ -7,9 +7,9 @@
     "delta": 0.001,
     "symmetry_error": 0.0,
     "summary": {
-      "min_cm-1": 46.77273317563701,
-      "max_cm-1": 3270.7786693883786,
-      "mean_abs_cm-1": 1030.0049017307308,
+      "min_cm-1": 46.781049298810196,
+      "max_cm-1": 3270.7832762810567,
+      "mean_abs_cm-1": 1030.0058701205141,
       "n_negative": 0,
       "n_small_negative": 0
     }
@@ -19,57 +19,57 @@
       "delta": 0.05,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 45.682436998546954,
-        "max_cm-1": 3273.4574408598655,
-        "mean_abs_cm-1": 1029.8503205030663,
+        "min_cm-1": 45.68198708993403,
+        "max_cm-1": 3273.457334511303,
+        "mean_abs_cm-1": 1029.850284878662,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.07429064320696498,
-        "mean_absolute_error": 0.02077262282820115,
-        "max_absolute_error": 0.718848705291748
+        "rms_error": 0.07430265607428516,
+        "mean_absolute_error": 0.020769830105699064,
+        "max_absolute_error": 0.7192111015319824
       }
     },
     {
       "delta": 0.01,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 46.729964930985446,
-        "max_cm-1": 3270.672154693517,
-        "mean_abs_cm-1": 1030.0037113047624,
+        "min_cm-1": 46.72851144781019,
+        "max_cm-1": 3270.6715624680073,
+        "mean_abs_cm-1": 1030.003374479652,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0030535648816253235,
-        "mean_absolute_error": 0.0010186359343797337,
-        "max_absolute_error": 0.029647350311279297
+        "rms_error": 0.0030698162410627413,
+        "mean_absolute_error": 0.0010287324820873673,
+        "max_absolute_error": 0.029259920120239258
       }
     },
     {
       "delta": 0.005,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 46.746856775005455,
-        "max_cm-1": 3270.6783846313338,
-        "mean_abs_cm-1": 1030.0059634649,
+        "min_cm-1": 46.746022644162224,
+        "max_cm-1": 3270.677288180057,
+        "mean_abs_cm-1": 1030.0065716694069,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0009209596978376539,
-        "mean_absolute_error": 0.00046632590336814225,
-        "max_absolute_error": 0.008445978164672852
+        "rms_error": 0.0009346691977005011,
+        "mean_absolute_error": 0.0004722475223164189,
+        "max_absolute_error": 0.008273124694824219
       }
     },
     {
       "delta": 0.001,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 46.77273317563701,
-        "max_cm-1": 3270.7786693883786,
-        "mean_abs_cm-1": 1030.0049017307308,
+        "min_cm-1": 46.781049298810196,
+        "max_cm-1": 3270.7832762810567,
+        "mean_abs_cm-1": 1030.0058701205141,
         "n_negative": 0,
         "n_small_negative": 0
       }
@@ -81,33 +81,33 @@
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 46.76546983658801,
-        "max_cm-1": 3270.694607915058,
-        "mean_abs_cm-1": 1030.0080301063583,
+        "min_cm-1": 75.3676919525714,
+        "max_cm-1": 3271.219841364867,
+        "mean_abs_cm-1": 1033.2854463490387,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0006018809958327906,
-        "mean_absolute_error": 0.0003325564062429799,
-        "max_absolute_error": 0.0064945220947265625
+        "rms_error": 0.17884344674486818,
+        "mean_absolute_error": 0.021263075253012142,
+        "max_absolute_error": 2.7524929977953434
       }
     },
     {
       "method": "double_backward",
       "symmetrize": false,
-      "symmetry_error": 1.2993812561035156e-05,
+      "symmetry_error": 5.054473876953125e-05,
       "summary": {
-        "min_cm-1": 46.765427478093066,
-        "max_cm-1": 3270.6944657791355,
-        "mean_abs_cm-1": 1030.0079458236428,
+        "min_cm-1": 75.36764374875497,
+        "max_cm-1": 3271.2198698594457,
+        "mean_abs_cm-1": 1033.2853995902724,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0006030858265578916,
-        "mean_absolute_error": 0.0003328743767292227,
-        "max_absolute_error": 0.0064945220947265625
+        "rms_error": 0.17884336357484834,
+        "mean_absolute_error": 0.021262895900477297,
+        "max_absolute_error": 2.75249395146966
       }
     },
     {
@@ -115,33 +115,33 @@
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 46.76551627669251,
-        "max_cm-1": 3270.694815645333,
-        "mean_abs_cm-1": 1030.0080245271063,
+        "min_cm-1": 75.36752721606253,
+        "max_cm-1": 3271.2199355607195,
+        "mean_abs_cm-1": 1033.2854542175403,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0006017511639658901,
-        "mean_absolute_error": 0.0003324997040765061,
-        "max_absolute_error": 0.0064945220947265625
+        "rms_error": 0.17884296197848734,
+        "mean_absolute_error": 0.02126284821834243,
+        "max_absolute_error": 2.752513024955988
       }
     },
     {
       "method": "vmap",
       "symmetrize": false,
-      "symmetry_error": 3.528594970703125e-05,
+      "symmetry_error": 3.4689903259277344e-05,
       "summary": {
-        "min_cm-1": 46.76540742488201,
-        "max_cm-1": 3270.6944592427376,
-        "mean_abs_cm-1": 1030.0080026635528,
+        "min_cm-1": 75.36769563046087,
+        "max_cm-1": 3271.219858027429,
+        "mean_abs_cm-1": 1033.2854433602613,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0006025296420097732,
-        "mean_absolute_error": 0.000332767874315772,
-        "max_absolute_error": 0.0064868927001953125
+        "rms_error": 0.1788432783540731,
+        "mean_absolute_error": 0.02126311094688401,
+        "max_absolute_error": 2.752485368400812
       }
     },
     {
@@ -149,33 +149,33 @@
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 46.76555137160043,
-        "max_cm-1": 3270.694312657228,
-        "mean_abs_cm-1": 1030.007994303662,
+        "min_cm-1": 75.3674340093291,
+        "max_cm-1": 3271.219833993612,
+        "mean_abs_cm-1": 1033.2854204129796,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0006023022680890256,
-        "mean_absolute_error": 0.00033276142081084813,
-        "max_absolute_error": 0.0064945220947265625
+        "rms_error": 0.17884345533386622,
+        "mean_absolute_error": 0.02126295988758405,
+        "max_absolute_error": 2.752492044121027
       }
     },
     {
       "method": "fairchem",
       "symmetrize": false,
-      "symmetry_error": 5.777180194854736e-05,
+      "symmetry_error": 5.6624412536621094e-05,
       "summary": {
-        "min_cm-1": 46.76562199686743,
-        "max_cm-1": 3270.694448277411,
-        "mean_abs_cm-1": 1030.007938199648,
+        "min_cm-1": 75.3678872759537,
+        "max_cm-1": 3271.219997513784,
+        "mean_abs_cm-1": 1033.2853941420665,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0006018676753239272,
-        "mean_absolute_error": 0.00033267311871132275,
-        "max_absolute_error": 0.0064945220947265625
+        "rms_error": 0.17884321526247596,
+        "mean_absolute_error": 0.021262784714502984,
+        "max_absolute_error": 2.752508256584406
       }
     },
     {
@@ -183,33 +183,33 @@
       "symmetrize": true,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 46.76534445205823,
-        "max_cm-1": 3270.694428599515,
-        "mean_abs_cm-1": 1030.007948545912,
+        "min_cm-1": 75.36754029652184,
+        "max_cm-1": 3271.2197354552204,
+        "mean_abs_cm-1": 1033.2854072787543,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0006033050012465692,
-        "mean_absolute_error": 0.00033300634966530827,
-        "max_absolute_error": 0.0064868927001953125
+        "rms_error": 0.17884327480203838,
+        "mean_absolute_error": 0.02126302224775075,
+        "max_absolute_error": 2.75249395146966
       }
     },
     {
       "method": "fairchem_loop",
       "symmetrize": false,
-      "symmetry_error": 3.814697265625e-05,
+      "symmetry_error": 2.765655517578125e-05,
       "summary": {
-        "min_cm-1": 46.76548702032178,
-        "max_cm-1": 3270.694483526755,
-        "mean_abs_cm-1": 1030.0080351203273,
+        "min_cm-1": 75.36762733963243,
+        "max_cm-1": 3271.219654517005,
+        "mean_abs_cm-1": 1033.285500314777,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0006020862489556823,
-        "mean_absolute_error": 0.0003326569650074996,
-        "max_absolute_error": 0.0064868927001953125
+        "rms_error": 0.17884347979331894,
+        "mean_absolute_error": 0.021263126429043894,
+        "max_absolute_error": 2.752482984215021
       }
     },
     {
@@ -221,19 +221,8 @@
     {
       "method": "double_backward_float64",
       "symmetrize": true,
-      "symmetry_error": 0.0,
-      "summary": {
-        "min_cm-1": 46.76589721723453,
-        "max_cm-1": 3270.694627647402,
-        "mean_abs_cm-1": 1030.0078861540492,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 0.0006014135819760229,
-        "mean_absolute_error": 0.0003322951256431143,
-        "max_absolute_error": 0.00647991281658733
-      }
+      "symmetry_error": null,
+      "error": "Positions, cell, cell_offsets are all expected to be same. Check data going into AtomicData is correct dtype"
     }
   ]
 }
