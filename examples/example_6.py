@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
-"""UMA Hessian comparison example (standalone).
+"""UMA Hessian comparison example for distorted water (standalone).
+
+This example investigates Hessian consistency issues between analytical and
+finite-difference methods for a distorted water molecule. The distorted geometry
+shows significant differences (~0.9 eV/Å²) between analytical and FD Hessians.
 
 Usage
 -----
-    python example_1.py
+    python example_6.py
 
 Requirements
 ------------
@@ -16,7 +20,7 @@ Outputs
 The script prints finite-difference and analytical Hessian statistics to stdout
 and saves a JSON summary in ``<script_stem>.json`` alongside the script. The
 geometry is read from ``<script_stem>.xyz`` in the same directory, so the script
-can be copied or renamed (for example_2) without modification.
+can be copied or renamed without modification.
 """
 
 from __future__ import annotations

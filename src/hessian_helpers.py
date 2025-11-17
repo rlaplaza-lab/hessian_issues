@@ -142,7 +142,7 @@ class StandaloneUMACalculator(Calculator):
         # The collater may create new tensors, so we convert after collation
         if batch.pos.dtype != model_dtype:
             batch.pos = batch.pos.to(dtype=model_dtype)
-        if hasattr(batch, 'cell') and batch.cell is not None and batch.cell.dtype != model_dtype:
+        if hasattr(batch, "cell") and batch.cell is not None and batch.cell.dtype != model_dtype:
             batch.cell = batch.cell.to(dtype=model_dtype)
 
         # Ensure positions have requires_grad=True for gradient computation
@@ -465,4 +465,3 @@ __all__ = [
     "get_uma_calculator_with_inference_settings",
     "get_uma_calculator_with_dtype",
 ]
-

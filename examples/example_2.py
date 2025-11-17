@@ -46,7 +46,9 @@ helper_module = importlib.util.module_from_spec(helper_spec)
 sys.modules.setdefault(HELPER_MODULE, helper_module)
 helper_spec.loader.exec_module(helper_module)
 get_uma_calculator = helper_module.get_uma_calculator
-get_uma_calculator_with_inference_settings = helper_module.get_uma_calculator_with_inference_settings
+get_uma_calculator_with_inference_settings = (
+    helper_module.get_uma_calculator_with_inference_settings
+)
 get_uma_calculator_with_dtype = helper_module.get_uma_calculator_with_dtype
 
 STRUCTURE_PATH = REPO_ROOT / "data" / f"{SCRIPT_STEM}.xyz"
@@ -106,9 +108,7 @@ def enforce_python_ints(atoms) -> None:
     atoms.info["spin"] = int(atoms.info.get("spin", 1))
 
 
-def compute_finite_difference_hessian(
-    atoms, calculator, delta: float
-) -> tuple[np.ndarray, float]:
+def compute_finite_difference_hessian(atoms, calculator, delta: float) -> tuple[np.ndarray, float]:
     """Compute Hessian using ASE's Vibrations class with central differences."""
     # Ensure calculator is set
     atoms_copy = atoms.copy()
@@ -119,8 +119,9 @@ def compute_finite_difference_hessian(
     # Create temporary name to avoid cache conflicts
     import os
     import tempfile
+
     with tempfile.TemporaryDirectory() as tmpdir:
-        vib = Vibrations(atoms_copy, delta=delta, name=os.path.join(tmpdir, 'vib'))
+        vib = Vibrations(atoms_copy, delta=delta, name=os.path.join(tmpdir, "vib"))
         vib.run()
         vib.read()
         hessian = vib.H.copy()
@@ -365,11 +366,7 @@ def main() -> None:
             "method": entry["method"],
             "symmetrize": entry["symmetrize"],
             "symmetry_error": entry.get("symmetry_error"),
-            **(
-                {"summary": serialise_summary(entry["summary"])}
-                if "summary" in entry
-                else {}
-            ),
+            **({"summary": serialise_summary(entry["summary"])} if "summary" in entry else {}),
             **(
                 {"metrics_vs_reference": serialise_metrics(entry.get("metrics"))}
                 if entry.get("metrics") is not None
@@ -393,10 +390,7 @@ def main() -> None:
     def format_metrics(metrics: dict[str, float] | None) -> str:
         if metrics is None:
             return " "
-        return (
-            f"RMS {metrics['rms_error']:8.3f} eV/Å² | "
-            f"MAE {metrics['mean_absolute_error']:7.3f}"
-        )
+        return f"RMS {metrics['rms_error']:8.3f} eV/Å² | MAE {metrics['mean_absolute_error']:7.3f}"
 
     ref_label = f"Δ={reference['delta']:.3f} Å"
     print(f"\nReference (finite difference {ref_label}):")
@@ -427,4 +421,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

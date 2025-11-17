@@ -38,11 +38,13 @@ helper_module = importlib.util.module_from_spec(helper_spec)
 sys.modules.setdefault(HELPER_MODULE, helper_module)
 helper_spec.loader.exec_module(helper_module)
 
-get_uma_calculator_with_inference_settings = helper_module.get_uma_calculator_with_inference_settings
+get_uma_calculator_with_inference_settings = (
+    helper_module.get_uma_calculator_with_inference_settings
+)
 
 
 def select_device() -> str:
-    """Automatically select CUDA if available, otherwise CPU."""
+    """Pick CUDA when available, otherwise CPU."""
     try:
         import torch
 
@@ -103,4 +105,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

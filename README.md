@@ -30,6 +30,12 @@ The UMA pretrained model weights (`uma-s-1p1`) are downloaded automatically via 
 Install dependencies using pip:
 
 ```bash
+pip install -r requirements.txt
+```
+
+Or install individually:
+
+```bash
 pip install ase numpy torch fairchem-core
 ```
 
@@ -45,6 +51,8 @@ python examples/example_2.py
 python examples/example_3.py
 python examples/example_4.py
 python examples/example_5.py
+python examples/example_6.py
+python examples/example_7.py
 ```
 
 Each script:
@@ -74,34 +82,43 @@ Each script generates:
 ├── README.md                 # This file
 ├── src/                      # Core implementation
 │   └── hessian_helpers.py    # Standalone UMA calculator with Hessian computation
+├── requirements.txt          # Python package dependencies
 ├── examples/                 # Example scripts
 │   ├── example_1.py          # Large organic molecule test case (51 atoms)
 │   ├── example_2.py          # Water molecule (H₂O) test case
 │   ├── example_3.py          # Methane with distorted geometry
 │   ├── example_4.py          # Methane with equilibrium geometry
 │   ├── example_5.py          # Transition state structure test case
+│   ├── example_6.py          # Distorted water molecule test case
+│   ├── example_7.py          # Equilibrium water molecule test case
 │   └── example_inference_settings.py  # InferenceSettings demonstration
 ├── data/                     # Input molecular geometries
 │   ├── example_1.xyz
 │   ├── example_2.xyz
 │   ├── example_3.xyz
 │   ├── example_4.xyz
-│   └── example_5.xyz
+│   ├── example_5.xyz
+│   ├── example_6.xyz
+│   └── example_7.xyz
 └── results/                  # Generated output files (created by scripts)
     ├── example_1.json
     ├── example_2.json
     ├── example_3.json
     ├── example_4.json
-    └── example_5.json
+    ├── example_5.json
+    ├── example_6.json
+    └── example_7.json
 ```
 
 ## Reproducibility
 
 All scripts are designed to be self-contained and reproducible:
+- Dependencies are specified in `requirements.txt` for easy environment setup
 - Scripts automatically locate the repository root and find files in `src/`, `data/`, and `results/` directories
 - Device selection (CUDA/CPU) is automatic based on availability
-- Model weights are downloaded automatically on first use
+- Model weights are downloaded automatically on first use via FairChem
 - Results are saved in a standardized JSON format for easy comparison
+- All scripts use consistent methodology and parameters for reproducible results
 
 ## Example Descriptions
 
@@ -110,3 +127,5 @@ All scripts are designed to be self-contained and reproducible:
 - **example_3.py**: Methane (CH₄) molecule with distorted geometry, reproducing a failing test case from the test suite to investigate Hessian accuracy issues
 - **example_4.py**: Methane molecule with realistic equilibrium tetrahedral geometry (C-H bond length ~1.087 Å) to compare with the distorted geometry case and determine if accuracy issues are geometry-dependent
 - **example_5.py**: Transition state structure test case (12 atoms: C, H, F, Cl, N, O) to validate Hessian computation on transition state geometries
+- **example_6.py**: Distorted water molecule test case investigating Hessian consistency issues between analytical and finite-difference methods
+- **example_7.py**: Equilibrium water molecule test case comparing Hessian accuracy for equilibrium vs. distorted geometries

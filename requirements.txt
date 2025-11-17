@@ -1,0 +1,6 @@
+# Core dependencies for UMA Hessian analysis examples
+ase>=3.22.0
+numpy>=1.21.0
+torch>=1.12.0
+fairchem-core>=0.2.0
+
