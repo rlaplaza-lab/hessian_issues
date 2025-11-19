@@ -7,27 +7,51 @@ This document provides a comprehensive analysis of Hessian computation accuracy 
 Testing across 9 example systems reveals significant regressions in fairchem-core versions 2.8.0 and later, with the most severe issues affecting small molecules (3-5 atoms). The regression appears to have been partially mitigated in version 2.11.0 for some examples, but critical issues persist.
 
 **Key Findings:**
-- **Critical regressions** in examples 3 and 7 (distorted methane and equilibrium water) with RMS errors increasing by 400-600x
+- **Critical failures** in examples 3 and 7 (distorted methane and equilibrium water) in versions 2.8.0 and 2.10.0 - Hessian computation produces NaN values causing all methods to fail
+- **Critical regressions** in examples 3 and 7 in version 2.11.0 with RMS errors increasing by 400-600x compared to baseline
 - **Moderate regressions** in examples 5 and 6
 - **Minor regressions** in examples 1 and 9
-- **Example 8** failed to run across all versions due to file parsing issues
+- **Example 8** runs successfully across all versions (previously reported as failed due to parsing issues, now resolved)
 - **Examples 2 and 4** remain unaffected across all versions
 
 ## Summary: RMS Error Comparison Across Versions
 
 | Example | Structure | Atoms | v2.7.1 RMS | v2.8.0 RMS | v2.10.0 RMS | v2.11.0 RMS | Max Increase | Status |
 |---------|-----------|-------|------------|------------|-------------|-------------|--------------|--------|
-| **example_3** | example_3.xyz | 5 | **0.158** | 0.158* | 0.158* | **67.839** | **429x** | 🔴 **CRITICAL** |
-| **example_7** | example_7.xyz | 3 | **0.041** | 0.041* | 0.041* | **25.510** | **622x** | 🔴 **CRITICAL** |
-| example_5 | example_5.xyz | 12 | 0.001 | 0.001 | 0.001 | 0.179 | 179x | 🟡 Moderate |
-| example_6 | example_6.xyz | 3 | 0.000 | 0.000 | 0.000 | 0.212 | ∞ | 🟡 Moderate |
-| example_1 | example_1.xyz | 51 | 0.000 | 0.000 | 0.000 | 0.013 | ∞ | 🟢 Minor |
-| example_9 | example_9.xyz | 3 | 0.000 | 0.000 | 0.000 | 0.029 | ∞ | 🟢 Minor |
+| **example_3** | example_3.xyz | 5 | **0.158** | **FAILED** | **FAILED** | **67.839** | **429x** | 🔴 **CRITICAL** |
+| **example_7** | example_7.xyz | 3 | **0.041** | **FAILED** | **FAILED** | **25.510** | **622x** | 🔴 **CRITICAL** |
+| example_5 | example_5.xyz | 12 | 0.001 | 0.179 | 0.179 | 0.179 | 179x | 🟡 Moderate |
+| example_6 | example_6.xyz | 3 | 0.000 | 0.212 | 0.212 | 0.212 | ∞ | 🟡 Moderate |
+| example_1 | example_1.xyz | 51 | 0.000 | 0.013 | 0.013 | 0.013 | ∞ | 🟢 Minor |
+| example_9 | example_9.xyz | 3 | 0.000 | 0.029 | 0.029 | 0.029 | ∞ | 🟢 Minor |
 | example_2 | example_2.xyz | 3 | 0.001 | 0.001 | 0.001 | 0.001 | 1x | ✅ OK |
 | example_4 | example_4.xyz | 5 | 0.000 | 0.000 | 0.000 | 0.000 | 0x | ✅ OK |
-| example_8 | example_8.xyz | 5 | N/A | N/A | N/A | N/A | N/A | ⚠️ Failed |
+| example_8 | example_8.xyz | 5 | 0.001 | 0.122 | 0.122 | 0.122 | 122x | 🟡 Moderate |
 
-\* Note: Examples 3 and 7 reported failures during test execution in v2.8.0 and v2.10.0, but summary files show baseline values, suggesting old JSON results may have been used.
+**Note:** Examples 3 and 7 fail in versions 2.8.0 and 2.10.0 because Hessian computation produces NaN values (all 225 elements for example_3, all 81 elements for example_7), causing eigenvalue computation to fail. Version 2.11.0 computes Hessians but with massive errors.
+
+## Critical Failures: NaN Values in Hessian Computation
+
+### Root Cause Analysis
+
+In versions 2.8.0 and 2.10.0, examples 3 and 7 fail completely because the Hessian computation produces NaN (Not a Number) values for all matrix elements:
+
+- **Example 3:** All 225 elements (15×15 matrix) are NaN
+- **Example 7:** All 81 elements (9×9 matrix) are NaN
+
+This occurs across **all Hessian computation methods** (`double_backward`, `vmap`, `fairchem`, `fairchem_loop`), indicating a fundamental issue in the underlying computation rather than a method-specific bug.
+
+**Technical Details:**
+- The NaN values are detected before eigenvalue computation
+- Eigenvalue computation fails with `LinAlgError: Eigenvalues did not converge` when attempting to process NaN-containing matrices
+- The issue is not CUDA cache-related; clearing cache does not resolve it
+- Version 2.11.0 fixes the NaN issue but introduces massive numerical errors instead
+
+**Possible Causes:**
+- Division by zero in autograd computation paths
+- Numerical instability in gradient/hessian computation for small systems
+- Changes to tensor operations or dtype handling between 2.7.1 and 2.8.0
+- Issues with batch processing or vectorization for small molecules
 
 ## Critical Offenders (RMS Error > 10 eV/Å²)
 
@@ -52,9 +76,9 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 
 **Version Timeline:**
 - 2.7.1: ✅ Baseline (RMS = 0.158)
-- 2.8.0: ⚠️ Test execution failed (summary shows baseline, may be stale data)
-- 2.10.0: ⚠️ Test execution failed (summary shows baseline, may be stale data)
-- 2.11.0: 🔴 Critical regression (RMS = 67.839)
+- 2.8.0: 🔴 **FAILED** - Hessian computation produces NaN values (all 225 elements are NaN), causing all methods to fail
+- 2.10.0: 🔴 **FAILED** - Hessian computation produces NaN values (all 225 elements are NaN), causing all methods to fail
+- 2.11.0: 🔴 Critical regression (RMS = 67.839) - Hessian computation succeeds but with massive errors
 
 ### 🔴 Example 7: Equilibrium Water (3 atoms)
 
@@ -77,9 +101,9 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 
 **Version Timeline:**
 - 2.7.1: ✅ Baseline (RMS = 0.041)
-- 2.8.0: ⚠️ Test execution failed (summary shows baseline, may be stale data)
-- 2.10.0: ⚠️ Test execution failed (summary shows baseline, may be stale data)
-- 2.11.0: 🔴 Critical regression (RMS = 25.510)
+- 2.8.0: 🔴 **FAILED** - Hessian computation produces NaN values (all 81 elements are NaN), causing all methods to fail
+- 2.10.0: 🔴 **FAILED** - Hessian computation produces NaN values (all 81 elements are NaN), causing all methods to fail
+- 2.11.0: 🔴 Critical regression (RMS = 25.510) - Hessian computation succeeds but with massive errors
 
 ## Moderate Impact (RMS Error 0.1 - 10 eV/Å²)
 
@@ -99,9 +123,9 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 
 **Version Timeline:**
 - 2.7.1: ✅ Baseline (RMS = 0.001)
-- 2.8.0: ✅ OK (RMS = 0.001)
-- 2.10.0: ✅ OK (RMS = 0.001)
-- 2.11.0: 🟡 Regression (RMS = 0.179)
+- 2.8.0: 🟡 Regression (RMS = 0.179) - introduced in 2.8.0
+- 2.10.0: 🟡 Regression (RMS = 0.179) - persists
+- 2.11.0: 🟡 Regression (RMS = 0.179) - persists
 
 ### 🟡 Example 6: Distorted Water (3 atoms)
 
@@ -119,9 +143,9 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 
 **Version Timeline:**
 - 2.7.1: ✅ Baseline (RMS = 0.000)
-- 2.8.0: ✅ OK (RMS = 0.000)
-- 2.10.0: ✅ OK (RMS = 0.000)
-- 2.11.0: 🟡 Regression (RMS = 0.212)
+- 2.8.0: 🟡 Regression (RMS = 0.212) - introduced in 2.8.0
+- 2.10.0: 🟡 Regression (RMS = 0.212) - persists
+- 2.11.0: 🟡 Regression (RMS = 0.212) - persists
 
 ## Minor Impact (RMS Error < 0.1 eV/Å²)
 
@@ -141,9 +165,9 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 
 **Version Timeline:**
 - 2.7.1: ✅ Baseline (RMS = 0.000)
-- 2.8.0: ✅ OK (RMS = 0.000)
-- 2.10.0: ✅ OK (RMS = 0.000)
-- 2.11.0: 🟢 Minor regression (RMS = 0.013)
+- 2.8.0: 🟢 Minor regression (RMS = 0.013) - introduced in 2.8.0
+- 2.10.0: 🟢 Minor regression (RMS = 0.013) - persists
+- 2.11.0: 🟢 Minor regression (RMS = 0.013) - persists
 
 ### 🟢 Example 9: Rotated Equilibrium Water (3 atoms)
 
@@ -162,9 +186,9 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 
 **Version Timeline:**
 - 2.7.1: ✅ Baseline (RMS = 0.000)
-- 2.8.0: ✅ OK (RMS = 0.000)
-- 2.10.0: ✅ OK (RMS = 0.000)
-- 2.11.0: 🟢 Minor regression (RMS = 0.029)
+- 2.8.0: 🟢 Minor regression (RMS = 0.029) - introduced in 2.8.0
+- 2.10.0: 🟢 Minor regression (RMS = 0.029) - persists
+- 2.11.0: 🟢 Minor regression (RMS = 0.029) - persists
 
 ## Unaffected Systems
 
@@ -188,18 +212,28 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 - Equilibrium methane (example_4) is unaffected while distorted methane (example_3) shows critical regression
 - Strongly suggests geometry-dependent issues
 
-## Failed Test Cases
+## Moderate Impact (continued)
 
-### ⚠️ Example 8: Rotated Distorted Methane (5 atoms)
+### 🟡 Example 8: Rotated Distorted Methane (5 atoms)
 
-**Status:** Failed to run across all versions
+**Baseline (2.7.1):**
+- RMS = 0.001 eV/Å²
+- Best method: `double_backward_float64` (sym)
 
-**Error:** File parsing error in ASE (`ValueError: could not assign tuple of length 0 to structure with 4 fields`)
+**Regression (2.8.0+):**
+- RMS = 0.122 eV/Å² (122x increase)
+- Best method: `fairchem_loop` (sym)
 
 **Impact:**
-- Cannot assess regression for this rotated version of example_3
-- File format issue needs to be resolved to complete analysis
-- This would have been valuable for testing orientation dependence of the regression
+- Rotated version of example_3 shows moderate regression
+- Regression introduced in 2.8.0 and persists through 2.11.0
+- Note: Example 3 itself fails completely in 2.8.0/2.10.0, but the rotated version (example_8) runs with errors
+
+**Version Timeline:**
+- 2.7.1: ✅ Baseline (RMS = 0.001)
+- 2.8.0: 🟡 Regression (RMS = 0.122) - introduced in 2.8.0
+- 2.10.0: 🟡 Regression (RMS = 0.122) - persists
+- 2.11.0: 🟡 Regression (RMS = 0.122) - persists
 
 ## Key Observations
 
@@ -215,9 +249,10 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 - Pattern is complex and geometry-specific
 
 ### 3. Version-Specific Behavior
-- **2.8.0 and 2.10.0:** Test execution failures for examples 3 and 7 (may indicate crashes or errors)
-- **2.11.0:** Examples 3 and 7 run but show massive errors
-- Suggests changes between 2.10.0 and 2.11.0 may have changed error handling or computation paths
+- **2.8.0 and 2.10.0:** Critical failures for examples 3 and 7 - Hessian computation produces NaN values (all elements are NaN), causing eigenvalue computation to fail. All methods fail with "Hessian contains invalid values" errors.
+- **2.11.0:** Examples 3 and 7 run successfully but show massive errors (RMS errors of 67.839 and 25.510 respectively)
+- Suggests changes between 2.10.0 and 2.11.0 fixed the NaN issue but introduced numerical accuracy problems
+- **Root cause:** The NaN values in 2.8.0/2.10.0 indicate a fundamental bug in Hessian computation for these specific geometries, likely related to numerical instability or division by zero in the autograd computation
 
 ### 4. Method Dependence
 - Best methods vary across versions:
@@ -233,12 +268,17 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 
 | Version | Example 1 | Example 2 | Example 3 | Example 4 | Example 5 | Example 6 | Example 7 | Example 8 | Example 9 |
 |---------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-| 2.7.1   | ✅ 0.000   | ✅ 0.001   | ✅ 0.158   | ✅ 0.000   | ✅ 0.001   | ✅ 0.000   | ✅ 0.041   | ⚠️ Failed  | ✅ 0.000   |
-| 2.8.0   | ✅ 0.000   | ✅ 0.001   | ⚠️ 0.158*  | ✅ 0.000   | ✅ 0.001   | ✅ 0.000   | ⚠️ 0.041*  | ⚠️ Failed  | ✅ 0.000   |
-| 2.10.0  | ✅ 0.000   | ✅ 0.001   | ⚠️ 0.158*  | ✅ 0.000   | ✅ 0.001   | ✅ 0.000   | ⚠️ 0.041*  | ⚠️ Failed  | ✅ 0.000   |
-| 2.11.0  | 🟢 0.013   | ✅ 0.001   | 🔴 67.839  | ✅ 0.000   | 🟡 0.179   | 🟡 0.212   | 🔴 25.510  | ⚠️ Failed  | 🟢 0.029   |
+| 2.7.1   | ✅ 0.000   | ✅ 0.001   | ✅ 0.158   | ✅ 0.000   | ✅ 0.001   | ✅ 0.000   | ✅ 0.041   | ✅ 0.001   | ✅ 0.000   |
+| 2.8.0   | 🟢 0.013   | ✅ 0.001   | 🔴 FAILED  | ✅ 0.000   | 🟡 0.179   | 🟡 0.212   | 🔴 FAILED  | 🟡 0.122   | 🟢 0.029   |
+| 2.10.0  | 🟢 0.013   | ✅ 0.001   | 🔴 FAILED  | ✅ 0.000   | 🟡 0.179   | 🟡 0.212   | 🔴 FAILED  | 🟡 0.122   | 🟢 0.029   |
+| 2.11.0  | 🟢 0.013   | ✅ 0.001   | 🔴 67.839  | ✅ 0.000   | 🟡 0.179   | 🟡 0.212   | 🔴 25.510  | 🟡 0.122   | 🟢 0.029   |
 
-\* Test execution reported failures; values may be from previous runs
+**Legend:**
+- ✅ OK: No regression
+- 🟢 Minor: Small regression (< 0.1 eV/Å²)
+- 🟡 Moderate: Moderate regression (0.1 - 10 eV/Å²)
+- 🔴 FAILED: Hessian computation produces NaN values, all methods fail
+- 🔴 Critical: Severe regression (> 10 eV/Å²)
 
 ## Detailed Error Breakdown
 
@@ -357,19 +397,35 @@ Testing across 9 example systems reveals significant regressions in fairchem-cor
 
 ## Next Steps
 
-1. **Fix example_8 file format issue** to complete rotated geometry analysis
-2. **Re-run examples 3 and 7 in 2.8.0 and 2.10.0** to confirm actual behavior (current summaries may use stale data)
-3. **Contact fairchem-core maintainers** with this analysis to prioritize fixes
-4. **Create minimal reproducible examples** for bug reports
-5. **Monitor future versions** for regression fixes
+1. ✅ **Completed:** Re-run examples 3 and 7 in 2.8.0 and 2.10.0 - confirmed failures due to NaN values in Hessian computation
+2. ✅ **Completed:** Example 8 file format issue resolved - rotated geometry analysis now complete
+3. **Contact fairchem-core maintainers** with this analysis to prioritize fixes:
+   - Report NaN bug in versions 2.8.0 and 2.10.0 for examples 3 and 7
+   - Report massive accuracy regression in version 2.11.0 for examples 3 and 7
+4. **Create minimal reproducible examples** for bug reports showing:
+   - NaN values in Hessian computation (2.8.0/2.10.0)
+   - Massive RMS errors (2.11.0)
+5. **Investigate root cause** of NaN values in 2.8.0/2.10.0:
+   - Check for division by zero or numerical instability in autograd paths
+   - Review changes to Hessian computation between 2.7.1 and 2.8.0
+6. **Monitor future versions** for regression fixes
 
 ## Conclusion
 
-The regression analysis reveals critical issues in fairchem-core versions 2.8.0 and later, with the most severe problems affecting small molecules (3-5 atoms) and distorted geometries. While version 2.11.0 allows examples 3 and 7 to run (unlike 2.8.0/2.10.0), the errors are catastrophic, making Hessian computations unreliable for these systems.
+The regression analysis reveals critical issues in fairchem-core versions 2.8.0 and later, with the most severe problems affecting small molecules (3-5 atoms) and distorted geometries.
+
+**Key Findings:**
+
+1. **Versions 2.8.0 and 2.10.0:** Examples 3 and 7 completely fail due to NaN values in Hessian computation. All 225 elements (example_3) or 81 elements (example_7) are NaN, causing eigenvalue computation to fail. This represents a critical bug that makes Hessian computation impossible for these systems.
+
+2. **Version 2.11.0:** Examples 3 and 7 run successfully but show catastrophic errors (RMS errors of 67.839 and 25.510 respectively, representing 429x and 622x increases from baseline). While the NaN bug is fixed, the numerical accuracy is severely degraded.
+
+3. **Other regressions:** Examples 1, 5, 6, 8, and 9 show regressions introduced in 2.8.0 that persist through 2.11.0, though these are less severe than examples 3 and 7.
 
 The pattern suggests fundamental issues with:
-- Small molecule numerical stability
-- Distorted geometry handling
-- Autograd/hessian computation paths
+- Small molecule numerical stability (NaN values in 2.8.0/2.10.0)
+- Distorted geometry handling (example_3 fails/computes incorrectly)
+- Equilibrium geometry handling for water (example_7 fails/computes incorrectly)
+- Autograd/hessian computation paths (all methods affected)
 
-Immediate action is required to restore accuracy for affected systems, particularly for users relying on Hessian computations for transition state analysis and reaction pathway calculations.
+**Immediate action is required** to restore accuracy for affected systems, particularly for users relying on Hessian computations for transition state analysis and reaction pathway calculations. The NaN bug in 2.8.0/2.10.0 is particularly critical as it completely prevents Hessian computation for affected systems.

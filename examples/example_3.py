@@ -5,6 +5,9 @@ This example reproduces the methane Hessian test that fails in the test suite.
 It uses the same methane molecule from test_uma_hessian_methane to investigate
 the discrepancy between analytical and finite-difference Hessians.
 
+Note: example_8 is a rotation of this same geometry (same internal coordinates,
+different orientation) to test whether the regression is orientation-dependent.
+
 Usage
 -----
     python example_3.py
@@ -233,8 +236,32 @@ def main() -> None:
                 )
                 continue
 
-            symmetry_error = float(np.max(np.abs(hessian - hessian.T)))
-            freqs = compute_frequencies_cm(hessian, masses)
+            # Check for NaN/Inf values in Hessian
+            hessian_np = np.array(hessian.cpu() if hasattr(hessian, 'cpu') else hessian)
+            if np.any(np.isnan(hessian_np)) or np.any(np.isinf(hessian_np)):
+                n_nan = np.isnan(hessian_np).sum()
+                n_inf = np.isinf(hessian_np).sum()
+                analytical_results.append(
+                    {
+                        "method": method,
+                        "symmetrize": symmetrize,
+                        "error": f"Hessian contains invalid values: {n_nan} NaN, {n_inf} Inf",
+                    }
+                )
+                continue
+
+            try:
+                symmetry_error = float(np.max(np.abs(hessian - hessian.T)))
+                freqs = compute_frequencies_cm(hessian, masses)
+            except Exception as exc:  # pragma: no cover - diagnostic
+                analytical_results.append(
+                    {
+                        "method": method,
+                        "symmetrize": symmetrize,
+                        "error": f"Failed to compute frequencies: {exc}",
+                    }
+                )
+                continue
             analytical_results.append(
                 {
                     "method": method,

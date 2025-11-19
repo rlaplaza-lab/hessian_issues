@@ -7,9 +7,9 @@
     "delta": 0.001,
     "symmetry_error": 0.0,
     "summary": {
-      "min_cm-1": 13.220776166555277,
-      "max_cm-1": 1401.7144869925226,
-      "mean_abs_cm-1": 1020.1650471857754,
+      "min_cm-1": 3.719323109911677,
+      "max_cm-1": 1401.7830802900285,
+      "mean_abs_cm-1": 1019.154918164318,
       "n_negative": 0,
       "n_small_negative": 0
     }
@@ -19,57 +19,57 @@
       "delta": 0.05,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1.6515028264442961,
-        "max_cm-1": 1399.9863091278944,
-        "mean_abs_cm-1": 1018.4985368272805,
+        "min_cm-1": 1.4576163171687317,
+        "max_cm-1": 1399.9864457488522,
+        "mean_abs_cm-1": 1018.4773061489426,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.0289044811612912,
-        "mean_absolute_error": 0.013653705434666739,
-        "max_absolute_error": 0.13915300369262695
+        "rms_error": 0.02633622282356606,
+        "mean_absolute_error": 0.012548625883128908,
+        "max_absolute_error": 0.1128542423248291
       }
     },
     {
       "delta": 0.01,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1.4047007575419832,
-        "max_cm-1": 1400.7266010797464,
-        "mean_abs_cm-1": 1018.9051346559431,
+        "min_cm-1": 1.459566414709404,
+        "max_cm-1": 1400.7249524599108,
+        "mean_abs_cm-1": 1018.909315811309,
         "n_negative": 0,
         "n_small_negative": 0
       },
       "metrics_vs_reference": {
-        "rms_error": 0.013079433139792448,
-        "mean_absolute_error": 0.007111760477224986,
-        "max_absolute_error": 0.0681757926940918
+        "rms_error": 0.011537827808094443,
+        "mean_absolute_error": 0.005484235783418019,
+        "max_absolute_error": 0.04849433898925781
       }
     },
     {
       "delta": 0.005,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 1.6024809398048847,
-        "max_cm-1": 1400.7547511294651,
-        "mean_abs_cm-1": 1018.940683653529,
-        "n_negative": 0,
-        "n_small_negative": 0
+        "min_cm-1": -0.9298872072300957,
+        "max_cm-1": 1400.7462779601028,
+        "mean_abs_cm-1": 1018.8695506409181,
+        "n_negative": 1,
+        "n_small_negative": 1
       },
       "metrics_vs_reference": {
-        "rms_error": 0.012645993213689177,
-        "mean_absolute_error": 0.006931929124726189,
-        "max_absolute_error": 0.061583518981933594
+        "rms_error": 0.011245303894693932,
+        "mean_absolute_error": 0.005239647295739915,
+        "max_absolute_error": 0.047469139099121094
       }
     },
     {
       "delta": 0.001,
       "symmetry_error": 0.0,
       "summary": {
-        "min_cm-1": 13.220776166555277,
-        "max_cm-1": 1401.7144869925226,
-        "mean_abs_cm-1": 1020.1650471857754,
+        "min_cm-1": 3.719323109911677,
+        "max_cm-1": 1401.7830802900285,
+        "mean_abs_cm-1": 1019.154918164318,
         "n_negative": 0,
         "n_small_negative": 0
       }
@@ -79,138 +79,50 @@
     {
       "method": "double_backward",
       "symmetrize": true,
-      "symmetry_error": 0.0,
-      "summary": {
-        "min_cm-1": -0.12748753056776874,
-        "max_cm-1": 10321.070453512128,
-        "mean_abs_cm-1": 3051.4826905168343,
-        "n_negative": 1,
-        "n_small_negative": 1
-      },
-      "metrics_vs_reference": {
-        "rms_error": 67.83939133276846,
-        "mean_absolute_error": 12.898703580200673,
-        "max_absolute_error": 360.15071868896484
-      }
+      "symmetry_error": null,
+      "error": "Hessian contains invalid values: 225 NaN, 0 Inf"
     },
     {
       "method": "double_backward",
       "symmetrize": false,
-      "symmetry_error": 0.25249290466308594,
-      "summary": {
-        "min_cm-1": 65.4404172417577,
-        "max_cm-1": 10322.417182133384,
-        "mean_abs_cm-1": 3058.7617721981082,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 67.83938399927769,
-        "mean_absolute_error": 12.898698821332719,
-        "max_absolute_error": 360.1506576538086
-      }
+      "symmetry_error": null,
+      "error": "Hessian contains invalid values: 225 NaN, 0 Inf"
     },
     {
       "method": "vmap",
       "symmetrize": true,
-      "symmetry_error": 0.0,
-      "summary": {
-        "min_cm-1": 0.054740379734925994,
-        "max_cm-1": 10321.070021246971,
-        "mean_abs_cm-1": 3051.474492291874,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 67.83938629621827,
-        "mean_absolute_error": 12.898699223001797,
-        "max_absolute_error": 360.1506881713867
-      }
+      "symmetry_error": null,
+      "error": "Hessian contains invalid values: 225 NaN, 0 Inf"
     },
     {
       "method": "vmap",
       "symmetrize": false,
-      "symmetry_error": 0.2317965030670166,
-      "summary": {
-        "min_cm-1": 62.701886614540435,
-        "max_cm-1": 10322.290710338912,
-        "mean_abs_cm-1": 3058.4554251609206,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 67.83935529186537,
-        "mean_absolute_error": 12.898696201373305,
-        "max_absolute_error": 360.15050506591797
-      }
+      "symmetry_error": null,
+      "error": "Hessian contains invalid values: 225 NaN, 0 Inf"
     },
     {
       "method": "fairchem",
       "symmetrize": true,
-      "symmetry_error": 0.0,
-      "summary": {
-        "min_cm-1": -0.12308881445943172,
-        "max_cm-1": 10321.070453579146,
-        "mean_abs_cm-1": 3051.4821419284394,
-        "n_negative": 1,
-        "n_small_negative": 1
-      },
-      "metrics_vs_reference": {
-        "rms_error": 67.83939132447206,
-        "mean_absolute_error": 12.898700238118568,
-        "max_absolute_error": 360.15071868896484
-      }
+      "symmetry_error": null,
+      "error": "Hessian contains invalid values: 225 NaN, 0 Inf"
     },
     {
       "method": "fairchem",
       "symmetrize": false,
-      "symmetry_error": 0.24149417877197266,
-      "summary": {
-        "min_cm-1": 64.00078921103683,
-        "max_cm-1": 10322.35066453774,
-        "mean_abs_cm-1": 3058.6009398720216,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 67.83937860668591,
-        "mean_absolute_error": 12.898698717691005,
-        "max_absolute_error": 360.15062713623047
-      }
+      "symmetry_error": null,
+      "error": "Hessian contains invalid values: 225 NaN, 0 Inf"
     },
     {
       "method": "fairchem_loop",
       "symmetrize": true,
-      "symmetry_error": 0.0,
-      "summary": {
-        "min_cm-1": -0.09809373610916378,
-        "max_cm-1": 10321.069588969534,
-        "mean_abs_cm-1": 3051.4792327847586,
-        "n_negative": 1,
-        "n_small_negative": 1
-      },
-      "metrics_vs_reference": {
-        "rms_error": 67.83937982044706,
-        "mean_absolute_error": 12.898698572011458,
-        "max_absolute_error": 360.1506576538086
-      }
+      "symmetry_error": null,
+      "error": "Hessian contains invalid values: 225 NaN, 0 Inf"
     },
     {
       "method": "fairchem_loop",
       "symmetrize": false,
-      "symmetry_error": 0.12369227409362793,
-      "summary": {
-        "min_cm-1": 45.79634910424628,
-        "max_cm-1": 10321.651071302342,
-        "mean_abs_cm-1": 3056.568037128376,
-        "n_negative": 0,
-        "n_small_negative": 0
-      },
-      "metrics_vs_reference": {
-        "rms_error": 67.83939233205207,
-        "mean_absolute_error": 12.898701920616958,
-        "max_absolute_error": 360.15071868896484
-      }
+      "symmetry_error": null,
+      "error": "Hessian contains invalid values: 225 NaN, 0 Inf"
     },
     {
       "method": "double_backward_inference_settings",

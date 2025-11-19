@@ -1,7 +1,7 @@
 # UMA Hessian Analysis Summary
 
 **FairChem-Core Version:** 2.7.1
-**Number of Examples:** 8
+**Number of Examples:** 9
 
 ---
 
@@ -11,9 +11,10 @@
 |---------|-----------|-------|--------|-------------|-----------|-----|-----------|-----------|
 | example_1 | example_1.xyz | 51 | cuda | double_backward_float64 (sym) | 0.000 | 0.000 | 0.014 | 0 |
 | example_2 | example_2.xyz | 3 | cuda | fairchem (sym) | 0.001 | 0.001 | 0.006 | 0 |
-| example_3 | example_3.xyz | 5 | cuda | double_backward (sym) | 0.158 | 0.085 | 0.515 | 0 |
+| example_3 | example_3.xyz | 5 | cuda | double_backward_float64 (sym) | 0.158 | 0.085 | 0.515 | 0 |
 | example_4 | example_4.xyz | 5 | cuda | double_backward_float64 (sym) | 0.000 | 0.000 | 0.002 | 0 |
 | example_5 | example_5.xyz | 12 | cuda | double_backward_float64 (sym) | 0.001 | 0.000 | 0.006 | 0 |
 | example_6 | example_6.xyz | 3 | cuda | fairchem_loop (sym) | 0.000 | 0.000 | 0.000 | 0 |
 | example_7 | example_7.xyz | 3 | cuda | fairchem (no-sym) | 0.041 | 0.019 | 0.137 | 0 |
+| example_8 | example_8.xyz | 5 | cuda | double_backward_float64 (sym) | 0.001 | 0.000 | 0.006 | 0 |
 | example_9 | example_9.xyz | 3 | cuda | double_backward_float64 (sym) | 0.000 | 0.000 | 0.001 | 0 |
