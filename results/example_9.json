@@ -1,0 +1,228 @@
+{
+  "structure": "example_9.xyz",
+  "n_atoms": 3,
+  "device": "cuda",
+  "reference": {
+    "source": "finite_difference",
+    "delta": 0.001,
+    "symmetry_error": 0.0,
+    "summary": {
+      "min_cm-1": 1646.9903174969222,
+      "max_cm-1": 3827.892185290969,
+      "mean_abs_cm-1": 3070.252142480002,
+      "n_negative": 0,
+      "n_small_negative": 0
+    }
+  },
+  "finite_differences": [
+    {
+      "delta": 0.05,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1627.2161591781394,
+        "max_cm-1": 3835.927872471275,
+        "mean_abs_cm-1": 3069.0921882657217,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.09556356456665915,
+        "mean_absolute_error": 0.05631582169034691,
+        "max_absolute_error": 0.21511197090148926
+      }
+    },
+    {
+      "delta": 0.01,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1646.182338690753,
+        "max_cm-1": 3828.230892555132,
+        "mean_abs_cm-1": 3070.2123159501875,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.00392083995058703,
+        "mean_absolute_error": 0.002386259099840112,
+        "max_absolute_error": 0.008792523294687271
+      }
+    },
+    {
+      "delta": 0.005,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1646.7642400266866,
+        "max_cm-1": 3827.9923670547487,
+        "mean_abs_cm-1": 3070.24471336523,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.0011213333852688936,
+        "mean_absolute_error": 0.0007579648898868465,
+        "max_absolute_error": 0.0025488436222076416
+      }
+    },
+    {
+      "delta": 0.001,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1646.9903174969222,
+        "max_cm-1": 3827.892185290969,
+        "mean_abs_cm-1": 3070.252142480002,
+        "n_negative": 0,
+        "n_small_negative": 0
+      }
+    }
+  ],
+  "analytical_methods": [
+    {
+      "method": "double_backward",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1638.9550183707406,
+        "max_cm-1": 3827.8976662980576,
+        "mean_abs_cm-1": 3067.5847478988294,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.029079584387792422,
+        "mean_absolute_error": 0.01605212311677198,
+        "max_absolute_error": 0.11415743827819824
+      }
+    },
+    {
+      "method": "double_backward",
+      "symmetrize": false,
+      "symmetry_error": 7.62939453125e-06,
+      "summary": {
+        "min_cm-1": 1638.955127625066,
+        "max_cm-1": 3827.8977791307866,
+        "mean_abs_cm-1": 3067.584871339801,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.02907934151518875,
+        "mean_absolute_error": 0.016052036946438208,
+        "max_absolute_error": 0.11415362358093262
+      }
+    },
+    {
+      "method": "vmap",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1638.955038160096,
+        "max_cm-1": 3827.8976661846614,
+        "mean_abs_cm-1": 3067.5847616408046,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.02907993931677535,
+        "mean_absolute_error": 0.016052222325621795,
+        "max_absolute_error": 0.11416506767272949
+      }
+    },
+    {
+      "method": "vmap",
+      "symmetrize": false,
+      "symmetry_error": 3.814697265625e-06,
+      "summary": {
+        "min_cm-1": 1638.9549089453617,
+        "max_cm-1": 3827.897618906452,
+        "mean_abs_cm-1": 3067.584689537726,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.029079725256208756,
+        "mean_absolute_error": 0.016052222302626176,
+        "max_absolute_error": 0.11415743827819824
+      }
+    },
+    {
+      "method": "fairchem",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1638.9550215617173,
+        "max_cm-1": 3827.8977534086475,
+        "mean_abs_cm-1": 3067.5848186537132,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.029079335719372615,
+        "mean_absolute_error": 0.016052104835254773,
+        "max_absolute_error": 0.11415362358093262
+      }
+    },
+    {
+      "method": "fairchem",
+      "symmetrize": false,
+      "symmetry_error": 7.152557373046875e-06,
+      "summary": {
+        "min_cm-1": 1638.9548962964507,
+        "max_cm-1": 3827.897670438833,
+        "mean_abs_cm-1": 3067.584720640621,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.029079847045955433,
+        "mean_absolute_error": 0.016052446170727274,
+        "max_absolute_error": 0.11415362358093262
+      }
+    },
+    {
+      "method": "fairchem_loop",
+      "symmetrize": true,
+      "symmetry_error": 0.0,
+      "summary": {
+        "min_cm-1": 1638.9550290035804,
+        "max_cm-1": 3827.8976484400064,
+        "mean_abs_cm-1": 3067.5847476238646,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.029079460105548034,
+        "mean_absolute_error": 0.01605210089150609,
+        "max_absolute_error": 0.11415743827819824
+      }
+    },
+    {
+      "method": "fairchem_loop",
+      "symmetrize": false,
+      "symmetry_error": 7.62939453125e-06,
+      "summary": {
+        "min_cm-1": 1638.9550574947016,
+        "max_cm-1": 3827.897824132796,
+        "mean_abs_cm-1": 3067.5848754214435,
+        "n_negative": 0,
+        "n_small_negative": 0
+      },
+      "metrics_vs_reference": {
+        "rms_error": 0.029079427546228057,
+        "mean_absolute_error": 0.01605212597972656,
+        "max_absolute_error": 0.11415362358093262
+      }
+    },
+    {
+      "method": "double_backward_inference_settings",
+      "symmetrize": true,
+      "symmetry_error": null,
+      "error": "Trying to backward through the graph a second time (or directly access saved tensors after they have already been freed). Saved intermediate values of the graph are freed when you call .backward() or autograd.grad(). Specify retain_graph=True if you need to backward through the graph a second time or if you need to access saved tensors after calling backward."
+    },
+    {
+      "method": "double_backward_float64",
+      "symmetrize": true,
+      "symmetry_error": null,
+      "error": "Positions, cell, cell_offsets are all expected to be same. Check data going into AtomicData is correct dtype"
+    }
+  ]
+}

@@ -9,8 +9,9 @@ Usage:
 
 The script will:
 1. Create conda environments for each version (cloned from py312)
+   - For 2.7.1, uses existing py312 environment (with version verification)
 2. Install the specific fairchem-core version
-3. Run all 7 example scripts
+3. Run all 9 example scripts
 4. Generate summary markdown reports
 
 Results are saved as summary_fairchem<version>.md files.
@@ -24,7 +25,7 @@ from typing import Optional
 REPO_ROOT = Path(__file__).resolve().parent
 
 # Versions to test (between 2.7.1 and 2.11.0)
-VERSIONS_TO_TEST = ["2.8.0", "2.10.0"]
+VERSIONS_TO_TEST = ["2.7.1", "2.8.0", "2.10.0", "2.11.0"]
 BASE_ENV = "py312"
 
 
@@ -71,6 +72,8 @@ def get_fairchem_version(env_name: str) -> Optional[str]:
 
 def create_env_for_version(version: str) -> tuple[bool, str]:
     """Create a conda environment cloned from base with specific fairchem-core version.
+    
+    For version 2.7.1, uses existing py312 environment with version verification.
 
     Args:
         version: fairchem-core version to install (e.g., "2.8.0")
@@ -78,6 +81,21 @@ def create_env_for_version(version: str) -> tuple[bool, str]:
     Returns:
         Tuple of (success, env_name)
     """
+    # Special handling for 2.7.1 - use existing py312 environment
+    if version == "2.7.1":
+        print(f"\n{'='*60}")
+        print(f"Using existing environment: {BASE_ENV} for fairchem-core {version}")
+        print(f"{'='*60}")
+        
+        # Verify version
+        installed_version = get_fairchem_version(BASE_ENV)
+        if installed_version != version:
+            print(f"✗ Error: Expected fairchem-core {version} in {BASE_ENV}, got {installed_version}")
+            return False, BASE_ENV
+        
+        print(f"✓ Verified fairchem-core version {version} in {BASE_ENV}")
+        return True, BASE_ENV
+    
     env_name = f"{BASE_ENV}-fairchem{version.replace('.', '')}"
 
     print(f"\n{'='*60}")
@@ -135,7 +153,7 @@ def run_examples_in_env(env_name: str, version: str) -> bool:
     # Run each example script
     examples_dir = REPO_ROOT / "examples"
     success_count = 0
-    for i in range(1, 8):
+    for i in range(1, 10):
         example_file = examples_dir / f"example_{i}.py"
         if not example_file.exists():
             print(f"Warning: {example_file} does not exist, skipping")
@@ -156,7 +174,7 @@ def run_examples_in_env(env_name: str, version: str) -> bool:
                     if line.strip():
                         print(f"  {line}")
 
-    print(f"\nCompleted {success_count}/7 examples")
+    print(f"\nCompleted {success_count}/9 examples")
     return success_count > 0
 
 
@@ -198,7 +216,7 @@ def get_fairchem_version():
 
 def load_results():
     results = {}
-    for i in range(1, 8):
+    for i in range(1, 10):
         result_file = RESULTS_DIR / f"example_{i}.json"
         if result_file.exists():
             with open(result_file, "r") as f:
