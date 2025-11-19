@@ -20,7 +20,7 @@ Outputs
 The script prints finite-difference and analytical Hessian statistics to stdout
 and saves a JSON summary in ``<script_stem>.json`` alongside the script. The
 geometry is read from ``<script_stem>.xyz`` in the same directory, so the script
-can be copied or renamed (for example_4) without modification.
+can be copied or renamed without modification.
 """
 
 from __future__ import annotations

@@ -7,7 +7,7 @@ in example_7 is orientation-dependent or geometry-dependent.
 
 Usage
 -----
-    python example_7.py
+    python example_9.py
 
 Requirements
 ------------
