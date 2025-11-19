@@ -89,8 +89,17 @@ This document provides a detailed analysis of which systems are most severely af
      - Small molecule handling
      - Hessian computation for 3-5 atom systems
      - Numerical stability in autograd computations
+     - Autograd/gradient computation changes
 3. **Testing**: These two examples should be added to fairchem-core's regression test suite
 4. **Workaround**: Consider using fairchem-core 2.7.1 for systems matching examples 3 and 7 characteristics
+
+## Next Steps
+
+To further narrow down the issue:
+1. Check fairchem-core release notes for version 2.8.0
+2. Review git commits between 2.7.1 and 2.8.0 tags
+3. Test patch versions between 2.7.1 and 2.8.0 if available (e.g., 2.7.2, 2.7.3)
+4. Consider testing 2.9.0 if it exists between 2.8.0 and 2.10.0
 
 ## Detailed Error Breakdown
 
