@@ -53,6 +53,8 @@ python examples/example_4.py
 python examples/example_5.py
 python examples/example_6.py
 python examples/example_7.py
+python examples/example_8.py
+python examples/example_9.py
 ```
 
 Each script:
@@ -60,10 +62,6 @@ Each script:
 2. Computes finite-difference Hessians at multiple step sizes (0.05, 0.01, 0.005, 0.001 Å)
 3. Computes analytical Hessians using multiple methods (with and without symmetrization)
 4. Compares results and saves a JSON report to the `results/` directory
-
-### Additional Examples
-
-- `examples/example_inference_settings.py`: Demonstrates usage of `InferenceSettings` for custom model configuration
 
 ## Output
 
@@ -91,7 +89,8 @@ Each script generates:
 │   ├── example_5.py          # Transition state structure test case
 │   ├── example_6.py          # Distorted water molecule test case
 │   ├── example_7.py          # Equilibrium water molecule test case
-│   └── example_inference_settings.py  # InferenceSettings demonstration
+│   ├── example_8.py          # Rotated distorted methane (tests orientation dependence)
+│   └── example_9.py          # Rotated equilibrium water (tests orientation dependence)
 ├── data/                     # Input molecular geometries
 │   ├── example_1.xyz
 │   ├── example_2.xyz
@@ -99,7 +98,9 @@ Each script generates:
 │   ├── example_4.xyz
 │   ├── example_5.xyz
 │   ├── example_6.xyz
-│   └── example_7.xyz
+│   ├── example_7.xyz
+│   ├── example_8.xyz         # Rotated version of example_3.xyz
+│   └── example_9.xyz         # Rotated version of example_7.xyz
 └── results/                  # Generated output files (created by scripts)
     ├── example_1.json
     ├── example_2.json
@@ -129,3 +130,5 @@ All scripts are designed to be self-contained and reproducible:
 - **example_5.py**: Transition state structure test case (12 atoms: C, H, F, Cl, N, O) to validate Hessian computation on transition state geometries
 - **example_6.py**: Distorted water molecule test case investigating Hessian consistency issues between analytical and finite-difference methods
 - **example_7.py**: Equilibrium water molecule test case comparing Hessian accuracy for equilibrium vs. distorted geometries
+- **example_8.py**: Rotated version of example_3 (distorted methane) with a small 3D rotation applied. Tests whether regressions are orientation-dependent or geometry-dependent. All internal coordinates (bond lengths, angles, dihedrals) are preserved.
+- **example_9.py**: Rotated version of example_7 (equilibrium water) with a small 3D rotation applied. Tests whether regressions are orientation-dependent or geometry-dependent. All internal coordinates (bond lengths, angles, dihedrals) are preserved.
